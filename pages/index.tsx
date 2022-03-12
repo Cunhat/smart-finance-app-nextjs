@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { PageTitle } from "../styles/Home";
+import { PageLayout } from "../components/PageLayout";
 
 const Home: NextPage = () => {
   return (
-    <div>
-      <PageTitle>dsadasdasd</PageTitle>
-    </div>
+    <>
+      <PageLayout>adasdasd</PageLayout>
+    </>
   );
 };
 
