@@ -6,16 +6,6 @@ export const PageLyoutContainer = styled.div`
   height: 100vh;
 `;
 
-export const SidebarContainer = styled.div`
-  height: 100vh;
-  width: 100px;
-  background-color: pink;
-
-  :hover {
-    width: 300px;
-  }
-`;
-
 export const PageMainContainer = styled.div`
   flex: 1;
   background-color: cyan;
