@@ -5,17 +5,19 @@ type SidebarItemProps = {
 };
 
 export const SidebarItemContainer = styled.li<SidebarItemProps>`
-  background-color: ${(props) => (props.selected ? "#edf1f8" : "#FFF")};
+  background-color: ${(props) =>
+    props.selected ? "var(--primary-base-100)" : "#FFF"};
   height: 65px;
   display: flex;
   align-items: center;
-  border-left: ${(props) => (props.selected ? "solid 5px #3c76f1" : "")};
+  border-left: ${(props) =>
+    props.selected ? `solid 5px var(--primary-base)` : ""};
   padding-left: ${(props) => (props.selected ? "35px" : "40px")};
   :hover {
     cursor: pointer;
-    background-color: #edf1f8;
+    background-color: var(--primary-base-100);
     p {
-      color: #3c76f1;
+      color: var(--primary-base);
     }
   }
 `;

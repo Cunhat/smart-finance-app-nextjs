@@ -8,6 +8,6 @@ export const PageLyoutContainer = styled.div`
 
 export const PageMainContainer = styled.div`
   flex: 1;
-  background-color: cyan;
+  background-color: var(--tertiary-base);
   padding: 20px;
 `;

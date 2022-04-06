@@ -7,6 +7,20 @@ export default createGlobalStyle`
   box-sizing: border-box;
 }
 
+:root {
+    --primary-base: #3C76F1;
+    --primary-base-100: #ecf1fe;
+    --secondary-base: #082253;
+    --tertiary-base: #10CFC9;
+
+    --success-color: #00C781;
+    --warning-color: #FFBB38;
+    --danger-color: #FF4040;
+
+    --default-white-color: #FFFFFF;
+}
+
+
 body,
 h1,
 h2,
@@ -71,6 +85,7 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+ 
 }
  
 `;
