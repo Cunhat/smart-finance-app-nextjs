@@ -1,7 +1,10 @@
 import React from "react";
 import { SidebarContainer } from "./styles";
 import { SideBarItem } from "./SideBarItem";
-import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressCard,
+  faSquarePollVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type SideBarProps = {
@@ -14,12 +17,32 @@ export function SideBar(props: SideBarProps) {
       <ul>
         <SideBarItem
           selected
-          text="Teste"
-          icon={<FontAwesomeIcon icon={faAddressCard} />}
+          text="Dashboard"
+          icon={
+            <FontAwesomeIcon
+              style={{ width: "30px", height: "30px" }}
+              icon={faSquarePollVertical}
+            />
+          }
         />
-        <SideBarItem text="Teste" />
-        <SideBarItem text="Teste" />
-        <SideBarItem text="Teste" />
+        <SideBarItem
+          text="Transactions"
+          icon={
+            <FontAwesomeIcon
+              style={{ width: "30px", height: "30px" }}
+              icon={faSquarePollVertical}
+            />
+          }
+        />
+        <SideBarItem
+          text="Settings"
+          icon={
+            <FontAwesomeIcon
+              style={{ width: "30px", height: "30px" }}
+              icon={faSquarePollVertical}
+            />
+          }
+        />
       </ul>
     </SidebarContainer>
   );
