@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SidebarContainer = styled.div`
   height: 100vh;
-  width: 100px;
+  width: 60px;
   background-color: ${(props) => props.theme.colors.white};
   padding-top: 20px;
 
@@ -11,14 +11,14 @@ export const SidebarContainer = styled.div`
   }
 
   :hover {
-    width: 300px;
+    width: 200px;
 
     li {
       justify-content: start;
       align-items: center;
       display: flex;
       gap: 20px;
-      padding-left: 50px;
+      padding-left: 13px;
 
       p {
         display: block;
@@ -33,11 +33,13 @@ type SidebarItemProps = {
 
 export const SidebarItemContainer = styled.li<SidebarItemProps>`
   background-color: ${(props) =>
-    props.selected ? props.theme.colors.primary[100] : "#FFF"};
+    props.selected ? props.theme.colors.primary[100] : "transparent"};
   height: 65px;
   display: flex;
   border-left: ${(props) =>
-    props.selected ? `solid 5px ${props.theme.colors.primary[500]}` : ""};
+    props.selected
+      ? `solid 5px ${props.theme.colors.primary[500]}`
+      : `solid 5px transparent`};
   justify-content: center;
   align-items: center;
   color: ${(props) => props.theme.colors.primary[500]};
