@@ -1,6 +1,22 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
+
+ @font-face {
+   font-family: "Smart Finance Ligth";
+   src: url("/fonts/SourceSansPro-Light.ttf");
+ }
+
+ @font-face {
+   font-family: "Smart Finance Regular";
+   src: url("/fonts/SourceSansPro-Regular.ttf");
+ }
+
+ @font-face {
+   font-family: "Smart Finance Bold";
+   src: url("/fonts/SourceSansPro-SemiBold.ttf");
+ }
+
 *,
 *::before,
 *::after {
@@ -36,6 +52,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: "Smart Finance Regular";
 }
 
 
@@ -76,18 +93,3 @@ select {
 }
  
 `;
-
-// @font-face {
-//   font-family: "SourcceSans Ligth";
-//   src: url("/fonts/SourceSansPro-Light.ttf");
-// }
-
-// @font-face {
-//   font-family: "SourcceSans Regular";
-//   src: url("/fonts/SourceSansPro-Regular.ttf");
-// }
-
-// @font-face {
-//   font-family: "SourcceSans Bold";
-//   src: url("/fonts/SourceSansPro-SemiBold.ttf");
-// }

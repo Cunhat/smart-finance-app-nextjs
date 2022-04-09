@@ -55,4 +55,6 @@ export const SidebarItemContainer = styled.li<SidebarItemProps>`
 
 export const SidebarItemTitle = styled.p<SidebarItemProps>`
   color: ${(props) => (props.selected ? "#3c76f1" : "#969696")};
+  font-family: "Smart Finance Bold";
+  font-size: 16px;
 `;

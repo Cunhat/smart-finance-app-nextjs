@@ -11,7 +11,7 @@ type SideBarItemProps = {
 export function SideBarItem(props: SideBarItemProps) {
   return (
     <SidebarItemContainer selected={props.selected}>
-      <div>{props.icon}</div>
+      {props.icon}
       <SidebarItemTitle selected={props.selected}>
         {props.text}
       </SidebarItemTitle>
