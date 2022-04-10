@@ -1,5 +1,5 @@
 import React from "react";
-import { SidebarContainer } from "./styles";
+import { SidebarContainer, SidebarItemsContainer } from "./styles";
 import { SideBarItem } from "./SideBarItem";
 import {
   faAddressCard,
@@ -14,10 +14,11 @@ type SideBarProps = {
 export function SideBar(props: SideBarProps) {
   return (
     <SidebarContainer>
-      <ul>
+      <SidebarItemsContainer>
         <SideBarItem
           selected
           text="Dashboard"
+          path="/dashboard"
           icon={
             <FontAwesomeIcon
               style={{ width: "30px", height: "30px" }}
@@ -27,6 +28,7 @@ export function SideBar(props: SideBarProps) {
         />
         <SideBarItem
           text="Transactions"
+          path="/transactions"
           icon={
             <FontAwesomeIcon
               style={{ width: "30px", height: "30px" }}
@@ -36,6 +38,8 @@ export function SideBar(props: SideBarProps) {
         />
         <SideBarItem
           text="Settings"
+          path="/settings"
+          bottom
           icon={
             <FontAwesomeIcon
               style={{ width: "30px", height: "30px" }}
@@ -43,7 +47,7 @@ export function SideBar(props: SideBarProps) {
             />
           }
         />
-      </ul>
+      </SidebarItemsContainer>
     </SidebarContainer>
   );
 }
