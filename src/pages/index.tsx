@@ -2,11 +2,7 @@ import type { NextPage } from "next";
 import { PageLayout } from "../components/PageLayout";
 
 const Home: NextPage = () => {
-  return (
-    <>
-      <PageLayout>adasdasd</PageLayout>
-    </>
-  );
+  return <PageLayout></PageLayout>;
 };
 
 export default Home;

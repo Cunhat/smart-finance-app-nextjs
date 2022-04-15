@@ -1,52 +1,34 @@
 import React from "react";
 import { SidebarContainer, SidebarItemsContainer } from "./styles";
 import { SideBarItem } from "./SideBarItem";
-import {
-  faAddressCard,
-  faSquarePollVertical,
-} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ISideBarItem } from "../../models/Interfaces";
 
-type SideBarProps = {
-  children?: React.ReactNode;
-};
+interface SideBarProps {
+  data: Array<ISideBarItem>;
+}
 
 export function SideBar(props: SideBarProps) {
   return (
     <SidebarContainer>
       <SidebarItemsContainer>
-        <SideBarItem
-          selected
-          text="Dashboard"
-          path="/dashboard"
-          icon={
-            <FontAwesomeIcon
-              style={{ width: "30px", height: "30px" }}
-              icon={faSquarePollVertical}
+        {props.data.map((item) => {
+          return (
+            <SideBarItem
+              key={item.title}
+              selected={item.selected}
+              title={item.title}
+              path={item.path}
+              bottom={item.bottom}
+              icon={
+                <FontAwesomeIcon
+                  style={{ width: "30px", height: "30px" }}
+                  icon={item.icon}
+                />
+              }
             />
-          }
-        />
-        <SideBarItem
-          text="Transactions"
-          path="/transactions"
-          icon={
-            <FontAwesomeIcon
-              style={{ width: "30px", height: "30px" }}
-              icon={faSquarePollVertical}
-            />
-          }
-        />
-        <SideBarItem
-          text="Settings"
-          path="/settings"
-          bottom
-          icon={
-            <FontAwesomeIcon
-              style={{ width: "30px", height: "30px" }}
-              icon={faSquarePollVertical}
-            />
-          }
-        />
+          );
+        })}
       </SidebarItemsContainer>
     </SidebarContainer>
   );

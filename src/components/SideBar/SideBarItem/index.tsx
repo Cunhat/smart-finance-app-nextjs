@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type SideBarItemProps = {
   icon?: any;
-  text: string;
+  title: string;
   selected?: boolean;
   path: string;
   bottom?: boolean;
@@ -17,7 +17,7 @@ export function SideBarItem(props: SideBarItemProps) {
       <SidebarItemContainer selected={props.selected} bottom={props.bottom}>
         {props.icon}
         <SidebarItemTitle selected={props.selected}>
-          {props.text}
+          {props.title}
         </SidebarItemTitle>
       </SidebarItemContainer>
     </Link>
