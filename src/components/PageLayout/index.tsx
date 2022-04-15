@@ -1,5 +1,5 @@
 import React from "react";
-import { PageLyoutContainer, PageMainContainer } from "./styles";
+import { PageLayoutContainer, PageMainContainer } from "./styles";
 import { SideBar } from "../SideBar";
 import { ISideBarItem } from "../../models/Interfaces";
 import {
@@ -16,7 +16,7 @@ type PageLayoutProps = {
 const data: Array<ISideBarItem> = [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/",
     selected: true,
     icon: faAddressCard,
   },
@@ -45,9 +45,9 @@ const data: Array<ISideBarItem> = [
 
 export function PageLayout(props: PageLayoutProps) {
   return (
-    <PageLyoutContainer>
+    <PageLayoutContainer>
       <SideBar data={data}></SideBar>
       <PageMainContainer>{props.children}</PageMainContainer>
-    </PageLyoutContainer>
+    </PageLayoutContainer>
   );
 }

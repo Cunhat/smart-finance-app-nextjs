@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PageLyoutContainer = styled.div`
+export const PageLayoutContainer = styled.div`
   display: flex;
   background-color: #fff;
   height: 100vh;

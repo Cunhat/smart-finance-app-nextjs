@@ -1,7 +1,7 @@
 import React from "react";
 import { SidebarItemContainer, SidebarItemTitle } from "../styles";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 
 type SideBarItemProps = {
   icon?: any;
@@ -12,9 +12,13 @@ type SideBarItemProps = {
 };
 
 export function SideBarItem(props: SideBarItemProps) {
+  const router = useRouter();
   return (
     <Link href={props.path} passHref>
-      <SidebarItemContainer selected={props.selected} bottom={props.bottom}>
+      <SidebarItemContainer
+        selected={router.pathname === props.path}
+        bottom={props.bottom}
+      >
         {props.icon}
         <SidebarItemTitle selected={props.selected}>
           {props.title}
