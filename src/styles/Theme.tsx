@@ -18,8 +18,9 @@ const theme = {
       danger: "#FF4040",
     },
     background: {
-      primary: "#F5F8FA",
+      primary: "#FFF",
       secondary: "#EDF1F8",
+      page: "#f6f7f8",
     },
   },
   fontSizes: {
@@ -31,6 +32,10 @@ const theme = {
       placeholder: "16px",
       text: "16px",
     },
+  },
+  shadows: {
+    general: "0 -1px 2px 0 rgb(0 0 0 / 5%), 0 2px 4px 0 rgb(0 0 0 / 16%)",
+    hover: "0 -1px 8px 0 rgb(0 0 0 / 5%), 0 8px 16px 1px rgb(0 0 0 / 16%)",
   },
 };
 

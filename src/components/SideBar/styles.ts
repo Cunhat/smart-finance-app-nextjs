@@ -5,6 +5,7 @@ export const SidebarContainer = styled.div`
   width: 60px;
   background-color: ${(props) => props.theme.colors.white};
   padding: 20px 0;
+  box-shadow: 0 -1px 8px 0 rgb(0 0 0 / 5%), 0 8px 16px 1px rgb(0 0 0 / 16%);
 
   a {
     display: none;
