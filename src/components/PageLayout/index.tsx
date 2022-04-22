@@ -1,5 +1,9 @@
 import React from "react";
-import { PageLayoutContainer, PageMainContainer } from "./styles";
+import {
+  PageLayoutContainer,
+  PageMainContainer,
+  PageLayoutSideBarContainer,
+} from "./styles";
 import { SideBar } from "../SideBar";
 import { ISideBarItem } from "../../models/Interfaces";
 import {
@@ -46,7 +50,9 @@ const data: Array<ISideBarItem> = [
 export function PageLayout(props: PageLayoutProps) {
   return (
     <PageLayoutContainer>
-      <SideBar data={data}></SideBar>
+      <PageLayoutSideBarContainer>
+        <SideBar data={data} />
+      </PageLayoutSideBarContainer>
       <PageMainContainer>{props.children}</PageMainContainer>
     </PageLayoutContainer>
   );

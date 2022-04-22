@@ -13,6 +13,8 @@ export const SidebarContainer = styled.div`
 
   :hover {
     width: 200px;
+    position: absolute;
+    z-index: 100;
 
     li {
       justify-content: start;

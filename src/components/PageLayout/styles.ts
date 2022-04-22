@@ -5,6 +5,9 @@ export const PageLayoutContainer = styled.div`
   background-color: #fff;
   height: 100vh;
 `;
+export const PageLayoutSideBarContainer = styled.div`
+  width: 60px;
+`;
 
 export const PageMainContainer = styled.div`
   flex: 1;
