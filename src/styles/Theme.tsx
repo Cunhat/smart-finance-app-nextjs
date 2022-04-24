@@ -7,6 +7,7 @@ const theme = {
     primary: {
       100: "#ecf1fe",
       500: "#3C76F1",
+      200: "#eef5fd",
     },
     secondary: {
       100: "#CED3DD",
