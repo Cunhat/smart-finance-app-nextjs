@@ -34,6 +34,23 @@ function ExpandableItems(props: ExpandableItemsProps) {
 
 const Teste = () => {
   const [open, setOpen] = React.useState(false);
+
+  const StyledTableCell = withStyles((theme) => ({
+    root: {
+      fontFamily: "Smart Finance Regular",
+      fontSize: "14px",
+    },
+  }))(TableCell);
+
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      "&:hover": {
+        background: "#f9f9f9",
+        cursor: "pointer",
+      },
+    },
+  }))(TableRow);
+
   return (
     <>
       <TableRow onClick={() => setOpen(!open)}>
@@ -42,55 +59,55 @@ const Teste = () => {
 
       {open && (
         <>
-          <TableRow>
-            <TableCell>11/06/1992</TableCell>
-            <TableCell>Prestacao Volvo</TableCell>
-            <TableCell>Carro</TableCell>
-            <TableCell>FixExpenses</TableCell>
-            <TableCell>200$</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>11/06/1992</TableCell>
-            <TableCell>Prestacao Volvo</TableCell>
-            <TableCell>Carro</TableCell>
-            <TableCell>FixExpenses</TableCell>
-            <TableCell>200$</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>11/06/1992</TableCell>
-            <TableCell>Prestacao Volvo</TableCell>
-            <TableCell>Carro</TableCell>
-            <TableCell>FixExpenses</TableCell>
-            <TableCell>200$</TableCell>
-          </TableRow>
+          <StyledTableRow>
+            <StyledTableCell>11/06/1992</StyledTableCell>
+            <StyledTableCell>Prestacao Volvo</StyledTableCell>
+            <StyledTableCell>Carro</StyledTableCell>
+            <StyledTableCell>FixExpenses</StyledTableCell>
+            <StyledTableCell>200$</StyledTableCell>
+          </StyledTableRow>
+          <StyledTableRow>
+            <StyledTableCell>11/06/1992</StyledTableCell>
+            <StyledTableCell>Prestacao Volvo</StyledTableCell>
+            <StyledTableCell>Carro</StyledTableCell>
+            <StyledTableCell>FixExpenses</StyledTableCell>
+            <StyledTableCell>200$</StyledTableCell>
+          </StyledTableRow>
+          <StyledTableRow>
+            <StyledTableCell>11/06/1992</StyledTableCell>
+            <StyledTableCell>Prestacao Volvo</StyledTableCell>
+            <StyledTableCell>Carro</StyledTableCell>
+            <StyledTableCell>FixExpenses</StyledTableCell>
+            <StyledTableCell>200$</StyledTableCell>
+          </StyledTableRow>
         </>
       )}
     </>
   );
 };
 
-export function Table() {
-  const StyledTable = withStyles((theme) => ({
-    root: {},
-    table: {
-      fontSize: "200pt",
-    },
-  }))(MuiTable);
+const StyledTable = withStyles((theme) => ({
+  root: {},
+}))(MuiTable);
 
+const StyledTableCell = withStyles((theme) => ({
+  root: {
+    fontFamily: "Smart Finance Bold",
+    fontSize: "18px",
+  },
+}))(TableCell);
+
+export function Table() {
   return (
     <TableContainer component={Paper}>
       <StyledTable aria-label="collapsible table">
         <TableHead>
           <TableRow>
-            <TableCell style={{ fontFamily: "Smart Finance Bold" }}>
-              Date
-            </TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Category</TableCell>
-            <TableCell>Tags</TableCell>
-            <TableCell style={{ fontFamily: "Smart Finance Bold" }}>
-              Amount
-            </TableCell>
+            <StyledTableCell>Date</StyledTableCell>
+            <StyledTableCell>Description</StyledTableCell>
+            <StyledTableCell>Category</StyledTableCell>
+            <StyledTableCell>Tags</StyledTableCell>
+            <StyledTableCell>Amount</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
