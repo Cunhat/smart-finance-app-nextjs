@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { TableExpandableItem } from "./sytles";
 import { withStyles } from "@material-ui/core/styles";
+import { TextInput } from "./Inputs";
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -61,7 +62,9 @@ const Teste = () => {
         <>
           <StyledTableRow>
             <StyledTableCell>11/06/1992</StyledTableCell>
-            <StyledTableCell>Prestacao Volvo</StyledTableCell>
+            <StyledTableCell>
+              <TextInput text="Volvo" />
+            </StyledTableCell>
             <StyledTableCell>Carro</StyledTableCell>
             <StyledTableCell>FixExpenses</StyledTableCell>
             <StyledTableCell>200$</StyledTableCell>
