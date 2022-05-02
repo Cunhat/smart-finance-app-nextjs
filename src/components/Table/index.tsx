@@ -67,7 +67,9 @@ const Teste = () => {
             </StyledTableCell>
             <StyledTableCell>Carro</StyledTableCell>
             <StyledTableCell>FixExpenses</StyledTableCell>
-            <StyledTableCell>200$</StyledTableCell>
+            <StyledTableCell>
+              <TextInput text="Volvo" />
+            </StyledTableCell>
           </StyledTableRow>
           <StyledTableRow>
             <StyledTableCell>11/06/1992</StyledTableCell>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { InputContainer, InputText } from "./styles";
+import { InputContainer, InputText, InfoText } from "./styles";
 
 type TextInputProps = {
   text: string;
@@ -28,7 +28,8 @@ export function TextInput(props: TextInputProps) {
 
   return (
     <InputContainer onClick={handleClick} ref={wrapperRef}>
-      {editable ? <InputText></InputText> : <p>{props.text}</p>}
+      <InputText editable={editable}></InputText>
+      <InfoText editable={editable}>{props.text}</InfoText>
     </InputContainer>
   );
 }
