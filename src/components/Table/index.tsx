@@ -8,9 +8,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { TableExpandableItem } from './sytles';
+import { TableExpandableItem, EditActions } from './sytles';
 import { withStyles } from '@material-ui/core/styles';
-import { TextInput } from './Inputs';
+import { BasicTextInput } from '../BasicTextInput';
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -62,29 +62,41 @@ function TableItem() {
             <StyledTableCell>FixExpenses</StyledTableCell>
             <StyledTableCell>Volvo</StyledTableCell>
             <StyledTableCell>
-              <FontAwesomeIcon icon={faPen} onClick={handleEdit} />
+              <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
             </StyledTableCell>
           </>
         ) : (
           <>
             <StyledTableCell>
-              <TextInput text='Volvo' />
+              <BasicTextInput />
             </StyledTableCell>
             <StyledTableCell>
-              <TextInput text='Volvo' />
+              <BasicTextInput />
             </StyledTableCell>
             <StyledTableCell>
-              <TextInput text='Volvo' />
+              <select id='category' name='cars'>
+                <option value='volvo'>Volvo</option>
+                <option value='saab'>Saab</option>
+                <option value='fiat'>Fiat</option>
+                <option value='audi'>Audi</option>
+              </select>
             </StyledTableCell>
             <StyledTableCell>
-              <TextInput text='Volvo' />
+              <select id='tags' name='cars'>
+                <option value='volvo'>Volvo</option>
+                <option value='saab'>Saab</option>
+                <option value='fiat'>Fiat</option>
+                <option value='audi'>Audi</option>
+              </select>
             </StyledTableCell>
             <StyledTableCell>
-              <TextInput text='Volvo' />
+              <BasicTextInput />
             </StyledTableCell>
             <StyledTableCell>
-              <FontAwesomeIcon icon={faCheck} onClick={handleEdit} />
-              <FontAwesomeIcon icon={faXmark} onClick={handleEdit} />
+              <EditActions>
+                <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleEdit} />
+                <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleEdit} />
+              </EditActions>
             </StyledTableCell>
           </>
         )}
