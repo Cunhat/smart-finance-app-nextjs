@@ -10,7 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp, faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { TableExpandableItem, EditActions } from './sytles';
 import { withStyles } from '@material-ui/core/styles';
-import { BasicTextInput } from '../BasicTextInput';
+import { BasicTextInput } from '../Inputs/BasicTextInput';
+import { SelectInput } from '../Inputs/Select';
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -74,20 +75,10 @@ function TableItem() {
               <BasicTextInput />
             </StyledTableCell>
             <StyledTableCell>
-              <select id='category' name='cars'>
-                <option value='volvo'>Volvo</option>
-                <option value='saab'>Saab</option>
-                <option value='fiat'>Fiat</option>
-                <option value='audi'>Audi</option>
-              </select>
+              <SelectInput></SelectInput>
             </StyledTableCell>
             <StyledTableCell>
-              <select id='tags' name='cars'>
-                <option value='volvo'>Volvo</option>
-                <option value='saab'>Saab</option>
-                <option value='fiat'>Fiat</option>
-                <option value='audi'>Audi</option>
-              </select>
+              <SelectInput></SelectInput>
             </StyledTableCell>
             <StyledTableCell>
               <BasicTextInput />

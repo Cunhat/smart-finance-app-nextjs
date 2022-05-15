@@ -11,7 +11,7 @@ export const InputText = styled.input`
 
   :focus {
     outline: none !important;
-    border: 2px solid ${props => props.theme.colors.primary[500]};;
+    border: 2px solid ${props => props.theme.colors.primary[500]};
     box-shadow: 0 0 10px #719ece;
     //border-color: ${props => props.theme.colors.primary[500]};
   }
