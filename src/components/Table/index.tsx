@@ -12,6 +12,7 @@ import { TableExpandableItem, EditActions } from './sytles';
 import { withStyles } from '@material-ui/core/styles';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
+import {CalendarInput } from '../Inputs/Calendar';
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -69,7 +70,7 @@ function TableItem() {
         ) : (
           <>
             <StyledTableCell>
-              <BasicTextInput />
+              <CalendarInput dateFormat='dd/mm/yy' value={new Date()} onChange={()=> {}}></CalendarInput>
             </StyledTableCell>
             <StyledTableCell>
               <BasicTextInput />

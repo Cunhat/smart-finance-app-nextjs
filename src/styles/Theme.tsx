@@ -1,5 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";   
 
 const theme = {
   colors: {
@@ -8,6 +10,7 @@ const theme = {
       100: "#ecf1fe",
       500: "#3C76F1",
       200: "#eef5fd",
+      300: "#719ece",
     },
     secondary: {
       100: "#CED3DD",

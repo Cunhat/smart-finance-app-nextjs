@@ -4,7 +4,7 @@ import * as Select from '@radix-ui/react-select';
 export const SelectContent = styled(Select.Content)`
   background-color: white;
   border-radius: 6px;
-  box-shadow: '0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2)';
+  box-shadow: ${props => props.theme.shadows.general};
   padding: 5px;
 
   :hover {
@@ -40,6 +40,7 @@ export const SelectTrigger = styled(Select.SelectTrigger)`
 export const SelectItem = styled(Select.Item)`
   padding: 5px;
   :hover {
+    border: none !important;
     color: ${props => props.theme.colors.primary[500]};
   }
 `;

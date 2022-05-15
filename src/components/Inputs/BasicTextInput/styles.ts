@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const InputText = styled.input`
   border-radius: 5px;
+  height: 25px;
   font-family: 'Smart Finance Regular';
   font-size: 14px;
   border-width: 1px;
