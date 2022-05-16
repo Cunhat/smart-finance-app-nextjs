@@ -12,10 +12,15 @@ import { TableExpandableItem, EditActions } from './sytles';
 import { withStyles } from '@material-ui/core/styles';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
-import {CalendarInput } from '../Inputs/Calendar';
+import { CalendarInput } from '../Inputs/Calendar';
+import { ITableHeader } from '../../models/Interfaces';
 
 type ExpandableItemsProps = {
   open: boolean;
+};
+
+type TableProps = {
+  header: ITableHeader;
 };
 
 function ExpandableItems(props: ExpandableItemsProps) {
@@ -70,7 +75,7 @@ function TableItem() {
         ) : (
           <>
             <StyledTableCell>
-              <CalendarInput dateFormat='dd/mm/yy' value={new Date()} onChange={()=> {}}></CalendarInput>
+              <CalendarInput dateFormat='dd/mm/yy' value={new Date()} onChange={() => {}}></CalendarInput>
             </StyledTableCell>
             <StyledTableCell>
               <BasicTextInput />
@@ -97,7 +102,7 @@ function TableItem() {
   );
 }
 
-const Teste = () => {
+const TableRowItem = () => {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -128,24 +133,35 @@ const StyledTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-export function Table() {
+// [
+//   {
+//     expandableTitle: 'June 2022',
+//     data: [
+//       {
+//         date: '',
+//         description: '',
+//         category: '',
+//         tags: '',
+//       },
+//     ],
+//   },
+// ];
+
+export function Table(props: TableProps) {
   return (
     <TableContainer component={Paper}>
       <StyledTable aria-label='collapsible table'>
         <TableHead>
           <TableRow>
-            <StyledTableCell>Date</StyledTableCell>
-            <StyledTableCell>Description</StyledTableCell>
-            <StyledTableCell>Category</StyledTableCell>
-            <StyledTableCell>Tags</StyledTableCell>
-            <StyledTableCell>Amount</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
+            {props.header.map(item => {
+              return <StyledTableCell key={item.title}>{item.title}</StyledTableCell>;
+            })}
           </TableRow>
         </TableHead>
         <TableBody>
-          <Teste></Teste>
-          <Teste></Teste>
-          <Teste></Teste>
+          <TableRowItem></TableRowItem>
+          <TableRowItem></TableRowItem>
+          <TableRowItem></TableRowItem>
         </TableBody>
       </StyledTable>
     </TableContainer>

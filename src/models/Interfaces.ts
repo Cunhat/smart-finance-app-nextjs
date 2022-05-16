@@ -1,4 +1,4 @@
-import { IconDefinition } from "@fortawesome/fontawesome-common-types";
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 export interface ISideBarItem {
   title: string;
@@ -7,3 +7,9 @@ export interface ISideBarItem {
   bottom?: boolean;
   icon: IconDefinition;
 }
+
+export interface ITableHeaderItem {
+  title: string;
+}
+
+export interface ITableHeader extends Array<ITableHeaderItem> {}
