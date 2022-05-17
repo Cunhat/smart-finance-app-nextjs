@@ -13,7 +13,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
 import { CalendarInput } from '../Inputs/Calendar';
-import { ITableHeader } from '../../models/Interfaces';
+import { ITableHeader, ITableData, ITableRowItem } from '../../models/Interfaces';
+import moment from 'moment';
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -21,6 +22,7 @@ type ExpandableItemsProps = {
 
 type TableProps = {
   header: ITableHeader;
+  tableData: ITableData;
 };
 
 function ExpandableItems(props: ExpandableItemsProps) {
@@ -135,7 +137,7 @@ const StyledTableCell = withStyles(theme => ({
 
 // [
 //   {
-//     expandableTitle: 'June 2022',
+//     expandableTitle: 'June',
 //     data: [
 //       {
 //         date: '',
@@ -148,6 +150,33 @@ const StyledTableCell = withStyles(theme => ({
 // ];
 
 export function Table(props: TableProps) {
+  React.useEffect(() => {
+    if (props.tableData) {
+      formatData(props.tableData);
+    }
+  }, [props.tableData]);
+
+  function formatData(data: ITableData) {
+    let finalObject: Array<ITableRowItem> = [];
+    let currentDate = moment();
+
+    data.forEach(item => {
+      let itemMonth = moment(item.date).format('MMMM');
+      let objKey = finalObject.find(elem => elem.expandableTitle === itemMonth);
+
+      if (objKey === undefined) {
+        finalObject.push({
+          expandableTitle: itemMonth,
+          data: [item],
+        });
+      } else {
+        finalObject.find(element => element.expandableTitle === itemMonth)?.data.push(item);
+      }
+    });
+    console.log(finalObject);
+  }
+
+  console.log(props);
   return (
     <TableContainer component={Paper}>
       <StyledTable aria-label='collapsible table'>

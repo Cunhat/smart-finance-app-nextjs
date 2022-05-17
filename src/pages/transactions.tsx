@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { PageLayout } from '../components/PageLayout';
 import { Table } from '../components/Table';
-import { ITableHeader } from '../models/Interfaces';
+import { ITableHeader, ITableData } from '../models/Interfaces';
 
 const header: ITableHeader = [
   {
@@ -24,43 +24,50 @@ const header: ITableHeader = [
   },
 ];
 
-const tableData = [
+const a = new Date(2022,0,30);
+
+const tableData:ITableData = [
   {
-    date: '',
-    description: 'Volvo',
+    date: Date.parse(a),
+    description: 'January',
     category: 'Carro',
     tags: 'Fixed Expenses',
+    value: 30
   },
   {
-    date: '',
-    description: 'Crossfit',
+    date:  Date.parse(new Date(2022,1,23)),
+    description: 'Febuary',
     category: 'Fitness',
     tags: 'Fixed Expenses',
+    value: 30
   },
   {
-    date: '',
-    description: 'Jantar Fora',
+    date:  Date.parse(new Date(2022,0,30)),
+    description: 'January',
     category: 'Dinners',
     tags: 'For me',
+    value: 30
   },
   {
-    date: '',
-    description: 'Etc',
+    date:  Date.parse(new Date(2022,4,3)),
+    description: 'May',
     category: 'Carro',
     tags: 'Fixed Expenses',
+    value: 30
   },
   {
-    date: '',
-    description: 'Volvo',
+    date:  Date.parse(new Date(2022,2,30)),
+    description: 'March',
     category: 'Carro',
     tags: 'Fixed Expenses',
+    value: 30
   },
 ];
 
 const Transactions: NextPage = () => {
   return (
     <PageLayout>
-      <Table header={header} />
+      <Table header={header} tableData={tableData}/>
     </PageLayout>
   );
 };
