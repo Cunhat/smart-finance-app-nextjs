@@ -42,7 +42,7 @@ const tableData:ITableData = [
     value: 30
   },
   {
-    date:  Date.parse(new Date(2022,0,30)),
+    date:  Date.parse(new Date(2021,0,30)),
     description: 'January',
     category: 'Dinners',
     tags: 'For me',

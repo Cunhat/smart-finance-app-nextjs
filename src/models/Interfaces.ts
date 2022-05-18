@@ -26,12 +26,5 @@ export interface ITableData extends Array<ITableDataItem> {}
 
 export interface ITableRowItem {
   expandableTitle: string;
-  data: [
-    {
-      date: number;
-      description: string;
-      category: string;
-      tags: string;
-    },
-  ];
+  data: Array<ITableDataItem>;
 }

@@ -13,11 +13,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
 import { CalendarInput } from '../Inputs/Calendar';
-import { ITableHeader, ITableData, ITableRowItem } from '../../models/Interfaces';
+import { ITableHeader, ITableData, ITableRowItem, ITableDataItem } from '../../models/Interfaces';
 import moment from 'moment';
 
 type ExpandableItemsProps = {
   open: boolean;
+  title: string;
 };
 
 type TableProps = {
@@ -25,12 +26,20 @@ type TableProps = {
   tableData: ITableData;
 };
 
+type TableRowItemProps = {
+  data: ITableRowItem;
+};
+
+type TableItemProps = {
+  data: ITableDataItem;
+};
+
 function ExpandableItems(props: ExpandableItemsProps) {
   return (
     <>
       <TableCell colSpan={6} style={{ padding: '0px' }}>
         <TableExpandableItem>
-          <p>June 2022</p>
+          <p>{props.title}</p>
           {props.open ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronUp} />}
         </TableExpandableItem>
       </TableCell>
@@ -38,7 +47,7 @@ function ExpandableItems(props: ExpandableItemsProps) {
   );
 }
 
-function TableItem() {
+function TableItem(props: TableItemProps) {
   const [edit, setEdit] = useState(false);
 
   const StyledTableRow = withStyles(theme => ({
@@ -65,11 +74,11 @@ function TableItem() {
       <StyledTableRow>
         {!edit ? (
           <>
-            <StyledTableCell>11/06/1992</StyledTableCell>
-            <StyledTableCell>Volvo</StyledTableCell>
-            <StyledTableCell>Carro</StyledTableCell>
-            <StyledTableCell>FixExpenses</StyledTableCell>
-            <StyledTableCell>Volvo</StyledTableCell>
+            <StyledTableCell>{moment(props.data.date).format('DD/MM/YYYY')}</StyledTableCell>
+            <StyledTableCell>{props.data.description}</StyledTableCell>
+            <StyledTableCell>{props.data.category}</StyledTableCell>
+            <StyledTableCell>{props.data.tags}</StyledTableCell>
+            <StyledTableCell>{props.data.value}</StyledTableCell>
             <StyledTableCell>
               <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
             </StyledTableCell>
@@ -104,20 +113,19 @@ function TableItem() {
   );
 }
 
-const TableRowItem = () => {
+const TableRowItem = (props: TableRowItemProps) => {
   const [open, setOpen] = React.useState(false);
-
   return (
     <>
       <TableRow onClick={() => setOpen(!open)}>
-        <ExpandableItems open={open} />
+        <ExpandableItems title={props.data.expandableTitle} open={open} />
       </TableRow>
 
       {open && (
         <>
-          <TableItem />
-          <TableItem />
-          <TableItem />
+          {props.data.data.map((item, index) => {
+            return <TableItem data={item} key={item.date + index} />;
+          })}
         </>
       )}
     </>
@@ -150,6 +158,7 @@ const StyledTableCell = withStyles(theme => ({
 // ];
 
 export function Table(props: TableProps) {
+  const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
   React.useEffect(() => {
     if (props.tableData) {
       formatData(props.tableData);
@@ -173,7 +182,7 @@ export function Table(props: TableProps) {
         finalObject.find(element => element.expandableTitle === itemMonth)?.data.push(item);
       }
     });
-    console.log(finalObject);
+    setTableData(finalObject);
   }
 
   console.log(props);
@@ -188,9 +197,9 @@ export function Table(props: TableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRowItem></TableRowItem>
-          <TableRowItem></TableRowItem>
-          <TableRowItem></TableRowItem>
+          {tableData.map(item => {
+            return <TableRowItem key={item.expandableTitle} data={item} />;
+          })}
         </TableBody>
       </StyledTable>
     </TableContainer>
