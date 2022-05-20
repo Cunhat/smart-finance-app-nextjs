@@ -49,7 +49,28 @@ const tableData:ITableData = [
     value: 30
   },
   {
+    date:  Date.parse(new Date(2019,4,3)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
     date:  Date.parse(new Date(2022,4,3)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2020,4,3)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2020,4,3)),
     description: 'May',
     category: 'Carro',
     tags: 'Fixed Expenses',

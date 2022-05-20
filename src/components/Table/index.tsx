@@ -58,6 +58,7 @@ function TableItem(props: TableItemProps) {
       },
     },
   }))(TableRow);
+
   const StyledTableCell = withStyles(theme => ({
     root: {
       fontFamily: 'Smart Finance Regular',
@@ -167,22 +168,53 @@ export function Table(props: TableProps) {
 
   function formatData(data: ITableData) {
     let finalObject: Array<ITableRowItem> = [];
+    let yearObject: Array<ITableRowItem> = [];
     let currentDate = moment();
 
     data.forEach(item => {
       let itemMonth = moment(item.date).format('MMMM');
+      let itemYear = moment(item.date).format('YYYY');
       let objKey = finalObject.find(elem => elem.expandableTitle === itemMonth);
+      let currentYear = moment(currentDate).format('YYYY');
 
-      if (objKey === undefined) {
+      if (objKey === undefined && itemYear === currentYear) {
         finalObject.push({
           expandableTitle: itemMonth,
           data: [item],
         });
-      } else {
+      } else if (itemYear === currentYear) {
         finalObject.find(element => element.expandableTitle === itemMonth)?.data.push(item);
+      } else {
+        let objKeyByYear = yearObject.find(elem => elem.expandableTitle === itemYear);
+        if (objKeyByYear === undefined) {
+          yearObject.push({
+            expandableTitle: itemYear,
+            data: [item],
+          });
+        } else {
+          yearObject.find(element => element.expandableTitle === itemYear)?.data.push(item);
+        }
       }
     });
-    setTableData(finalObject);
+
+    setTableData(sortObject(finalObject, yearObject));
+  }
+
+  function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
+    debugger;
+    finalObject.sort((a, b) => {
+      return moment().month(a.expandableTitle).format('M') < moment().month(b.expandableTitle).format('M')
+        ? 1
+        : moment().month(b.expandableTitle).format('M') < moment().month(a.expandableTitle).format('M')
+        ? -1
+        : 0;
+    });
+
+    yearObject.sort((a, b) => {
+      return a.expandableTitle < b.expandableTitle ? 1 : b.expandableTitle < a.expandableTitle ? -1 : 0;
+    });
+
+    return (finalObject = [...finalObject, ...yearObject]);
   }
 
   console.log(props);
