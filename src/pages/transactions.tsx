@@ -42,6 +42,48 @@ const tableData:ITableData = [
     value: 30
   },
   {
+    date: Date.parse(a),
+    description: 'January',
+    category: 'Car',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,1,23)),
+    description: 'Febuary',
+    category: 'Fitness',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date: Date.parse(a),
+    description: 'January',
+    category: 'Car',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,1,23)),
+    description: 'Febuary',
+    category: 'Fitness',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date: Date.parse(a),
+    description: 'January',
+    category: 'Car',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,1,23)),
+    description: 'Febuary',
+    category: 'Fitness',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
     date:  Date.parse(new Date(2021,0,30)),
     description: 'January',
     category: 'Restaurants',
