@@ -6,132 +6,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp, faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { TableExpandableItem, EditActions } from './sytles';
 import { withStyles } from '@material-ui/core/styles';
-import { BasicTextInput } from '../Inputs/BasicTextInput';
-import { SelectInput } from '../Inputs/Select';
-import { CalendarInput } from '../Inputs/Calendar';
-import { ITableHeader, ITableData, ITableRowItem, ITableDataItem } from '../../models/Interfaces';
+import { ITableHeader, ITableData, ITableRowItem } from '../../models/TableInterfaces/interfaces';
 import moment from 'moment';
-import { Tags, Category } from '../../utils/mock';
-
-type ExpandableItemsProps = {
-  open: boolean;
-  title: string;
-};
+import { TableRowItem } from './TableRowItem';
 
 type TableProps = {
   header: ITableHeader;
   tableData: ITableData;
-};
-
-type TableRowItemProps = {
-  data: ITableRowItem;
-};
-
-type TableItemProps = {
-  data: ITableDataItem;
-};
-
-function ExpandableItems(props: ExpandableItemsProps) {
-  return (
-    <>
-      <TableCell colSpan={6} style={{ padding: '0px' }}>
-        <TableExpandableItem>
-          <p>{props.title}</p>
-          {props.open ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronUp} />}
-        </TableExpandableItem>
-      </TableCell>
-    </>
-  );
-}
-
-function TableItem(props: TableItemProps) {
-  const [edit, setEdit] = useState(false);
-
-  const StyledTableRow = withStyles(theme => ({
-    root: {
-      '&:hover': {
-        background: '#f9f9f9',
-        cursor: 'pointer',
-      },
-    },
-  }))(TableRow);
-
-  const StyledTableCell = withStyles(theme => ({
-    root: {
-      fontFamily: 'Smart Finance Regular',
-      fontSize: '14px',
-    },
-  }))(TableCell);
-
-  function handleEdit() {
-    setEdit(!edit);
-  }
-
-  return (
-    <>
-      <StyledTableRow>
-        {!edit ? (
-          <>
-            <StyledTableCell>{moment(props.data.date).format('DD/MM/YYYY')}</StyledTableCell>
-            <StyledTableCell>{props.data.description}</StyledTableCell>
-            <StyledTableCell>{props.data.category}</StyledTableCell>
-            <StyledTableCell>{props.data.tags}</StyledTableCell>
-            <StyledTableCell>{props.data.value}</StyledTableCell>
-            <StyledTableCell>
-              <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
-            </StyledTableCell>
-          </>
-        ) : (
-          <>
-            <StyledTableCell>
-              <CalendarInput dateFormat='dd/mm/yy' date={moment(props.data.date).toDate()} />
-            </StyledTableCell>
-            <StyledTableCell>
-              <BasicTextInput value={props.data.description} />
-            </StyledTableCell>
-            <StyledTableCell>
-              <SelectInput data={Category} defaultValue={props.data.category} />
-            </StyledTableCell>
-            <StyledTableCell>
-              <SelectInput data={Tags} defaultValue={props.data.tags} />
-            </StyledTableCell>
-            <StyledTableCell>
-              <BasicTextInput value={props.data.value.toString()} />
-            </StyledTableCell>
-            <StyledTableCell>
-              <EditActions>
-                <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleEdit} />
-                <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleEdit} />
-              </EditActions>
-            </StyledTableCell>
-          </>
-        )}
-      </StyledTableRow>
-    </>
-  );
-}
-
-const TableRowItem = (props: TableRowItemProps) => {
-  const [open, setOpen] = React.useState(false);
-  return (
-    <>
-      <TableRow onClick={() => setOpen(!open)}>
-        <ExpandableItems title={props.data.expandableTitle} open={open} />
-      </TableRow>
-
-      {open && (
-        <>
-          {props.data.data.map((item, index) => {
-            return <TableItem data={item} key={item.date + index} />;
-          })}
-        </>
-      )}
-    </>
-  );
 };
 
 const StyledTable = withStyles(theme => ({
@@ -144,20 +26,6 @@ const StyledTableCell = withStyles(theme => ({
     fontSize: '18px',
   },
 }))(TableCell);
-
-// [
-//   {
-//     expandableTitle: 'June',
-//     data: [
-//       {
-//         date: '',
-//         description: '',
-//         category: '',
-//         tags: '',
-//       },
-//     ],
-//   },
-// ];
 
 export function Table(props: TableProps) {
   const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
@@ -226,7 +94,6 @@ export function Table(props: TableProps) {
     return finalObject;
   }
 
-  console.log(props);
   return (
     <TableContainer component={Paper}>
       <StyledTable aria-label='collapsible table'>
