@@ -2,10 +2,15 @@ import React from 'react';
 import {StyledCalendar} from './styles';
 import { Calendar } from 'primereact/calendar';
 
-export function CalendarInput() {
+type CalendarInputProps = {
+  dateFormat: string;
+  date: Date;
+}
+
+export function CalendarInput(props: CalendarInputProps) {
   return (
     <StyledCalendar>
-      <Calendar dateFormat='dd/mm/yy' value={new Date()} onChange={() =>{}}></Calendar>
+      <Calendar dateFormat={props.dateFormat} value={props.date} onChange={() =>{}} />
     </StyledCalendar>
   );
 }

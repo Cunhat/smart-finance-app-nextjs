@@ -15,6 +15,7 @@ import { SelectInput } from '../Inputs/Select';
 import { CalendarInput } from '../Inputs/Calendar';
 import { ITableHeader, ITableData, ITableRowItem, ITableDataItem } from '../../models/Interfaces';
 import moment from 'moment';
+import { Tags, Category } from '../../utils/mock';
 
 type ExpandableItemsProps = {
   open: boolean;
@@ -87,19 +88,19 @@ function TableItem(props: TableItemProps) {
         ) : (
           <>
             <StyledTableCell>
-              <CalendarInput dateFormat='dd/mm/yy' value={new Date()} onChange={() => {}}></CalendarInput>
+              <CalendarInput dateFormat='dd/mm/yy' date={moment(props.data.date).toDate()} />
             </StyledTableCell>
             <StyledTableCell>
-              <BasicTextInput />
+              <BasicTextInput value={props.data.description} />
             </StyledTableCell>
             <StyledTableCell>
-              <SelectInput></SelectInput>
+              <SelectInput data={Category} defaultValue={props.data.category} />
             </StyledTableCell>
             <StyledTableCell>
-              <SelectInput></SelectInput>
+              <SelectInput data={Tags} defaultValue={props.data.tags} />
             </StyledTableCell>
             <StyledTableCell>
-              <BasicTextInput />
+              <BasicTextInput value={props.data.value.toString()} />
             </StyledTableCell>
             <StyledTableCell>
               <EditActions>
@@ -220,10 +221,9 @@ export function Table(props: TableProps) {
       item.data.sort((a, b) => {
         return moment(a.date).format('YYYYMMDD') < moment(b.date).format('YYYYMMDD') ? 1 : -1;
       });
-    })
+    });
 
     return finalObject;
-
   }
 
   console.log(props);

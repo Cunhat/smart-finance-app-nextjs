@@ -4,10 +4,15 @@ import * as Select from '@radix-ui/react-select';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export function SelectInput() {
+type SelectInputProps = {
+  data: Array<string>;
+  defaultValue: string;
+};
+
+export function SelectInput(props: SelectInputProps) {
   return (
     <>
-      <Select.Root defaultValue='blueberry'>
+      <Select.Root defaultValue={props.defaultValue.toLocaleLowerCase()}>
         <SelectTrigger>
           <Select.Value />
           <Select.Icon>
@@ -17,15 +22,13 @@ export function SelectInput() {
         <SelectContent>
           <Select.Viewport>
             <Select.Group>
-              <SelectItem value='blueberry'>
-                <SelectItemText>Blueberry</SelectItemText>
-              </SelectItem>
-              <SelectItem value='apple'>
-                <SelectItemText>Apple</SelectItemText>
-              </SelectItem>
-              <SelectItem value='orange'>
-                <SelectItemText>Orange</SelectItemText>
-              </SelectItem>
+              {props.data?.map((item, index) => {
+                return (
+                  <SelectItem key={item+index} value={item.toLocaleLowerCase()}>
+                    <SelectItemText>{item}</SelectItemText>
+                  </SelectItem>
+                );
+              })}
             </Select.Group>
           </Select.Viewport>
         </SelectContent>

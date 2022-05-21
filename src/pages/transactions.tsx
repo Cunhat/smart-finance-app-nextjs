@@ -30,7 +30,7 @@ const tableData:ITableData = [
   {
     date: Date.parse(a),
     description: 'January',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
@@ -44,7 +44,7 @@ const tableData:ITableData = [
   {
     date:  Date.parse(new Date(2021,0,30)),
     description: 'January',
-    category: 'Dinners',
+    category: 'Restaurants',
     tags: 'For me',
     value: 30
   },
@@ -58,14 +58,14 @@ const tableData:ITableData = [
   {
     date:  Date.parse(new Date(2022,4,3)),
     description: 'May',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
   {
     date:  Date.parse(new Date(2020,4,3)),
     description: 'May',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
@@ -79,28 +79,28 @@ const tableData:ITableData = [
   {
     date:  Date.parse(new Date(2022,4,3)),
     description: 'May',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
   {
     date:  Date.parse(new Date(2022,4,2)),
     description: 'May',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
   {
     date:  Date.parse(new Date(2022,4,23)),
     description: 'May',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
   {
     date:  Date.parse(new Date(2022,2,30)),
     description: 'March',
-    category: 'Carro',
+    category: 'Car',
     tags: 'Fixed Expenses',
     value: 30
   },
