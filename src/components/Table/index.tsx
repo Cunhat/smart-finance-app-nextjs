@@ -201,7 +201,6 @@ export function Table(props: TableProps) {
   }
 
   function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
-    debugger;
     finalObject.sort((a, b) => {
       return moment().month(a.expandableTitle).format('M') < moment().month(b.expandableTitle).format('M')
         ? 1
@@ -214,7 +213,17 @@ export function Table(props: TableProps) {
       return a.expandableTitle < b.expandableTitle ? 1 : b.expandableTitle < a.expandableTitle ? -1 : 0;
     });
 
-    return (finalObject = [...finalObject, ...yearObject]);
+    finalObject = [...finalObject, ...yearObject];
+
+    //Order expenses by recent date
+    finalObject.forEach(item => {
+      item.data.sort((a, b) => {
+        return moment(a.date).format('YYYYMMDD') < moment(b.date).format('YYYYMMDD') ? 1 : -1;
+      });
+    })
+
+    return finalObject;
+
   }
 
   console.log(props);

@@ -24,7 +24,7 @@ const header: ITableHeader = [
   },
 ];
 
-const a = new Date(2022,0,30);
+const a = new Date(2022,0,31);
 
 const tableData:ITableData = [
   {
@@ -71,6 +71,27 @@ const tableData:ITableData = [
   },
   {
     date:  Date.parse(new Date(2020,4,3)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,4,3)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,4,2)),
+    description: 'May',
+    category: 'Carro',
+    tags: 'Fixed Expenses',
+    value: 30
+  },
+  {
+    date:  Date.parse(new Date(2022,4,23)),
     description: 'May',
     category: 'Carro',
     tags: 'Fixed Expenses',
