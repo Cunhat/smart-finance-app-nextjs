@@ -12,6 +12,7 @@ export const Category = [
   'Entertainment',
   'Lifestyle',
   'Others',
+  'Fixed expenses'
 ];
 
-export const Tags = ['Fixed Expenses', 'For me', 'Study', 'Investments', 'Long term'];
+export const Tags = ['Fixed expenses', 'For me', 'Study', 'Investments', 'Long term', "Tag"];
