@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import { PageLayout } from '../components/PageLayout';
 import { Table } from '../components/Table';
-import { ITableHeader, ITableData, ITableRowItem } from '../models/TableInterfaces/interfaces';
+import { ITableHeader, ITableRowItem } from '../models/TableInterfaces/interfaces';
+import { ITransaction } from '../models/Interfaces';
 import moment from 'moment';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { getTransaction } from '../api/queries';
 
 const header: ITableHeader = [
   {
@@ -28,155 +30,13 @@ const header: ITableHeader = [
   },
 ];
 
-const a = new Date(2022, 0, 31);
-
-const tableDataObj: ITableData = [
-  {
-    date: Date.parse(a),
-    description: 'January',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 1, 23)),
-    description: 'Febuary',
-    category: 'Fitness',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(a),
-    description: 'January',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 1, 23)),
-    description: 'Febuary',
-    category: 'Fitness',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(a),
-    description: 'January',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 1, 23)),
-    description: 'Febuary',
-    category: 'Fitness',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(a),
-    description: 'January',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 1, 23)),
-    description: 'Febuary',
-    category: 'Fitness',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2021, 0, 30)),
-    description: 'January',
-    category: 'Restaurants',
-    tags: 'For me',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2019, 4, 3)),
-    description: 'May',
-    category: 'Carro',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 4, 3)),
-    description: 'May',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2020, 4, 3)),
-    description: 'May',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2020, 4, 3)),
-    description: 'May',
-    category: 'Carro',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 4, 3)),
-    description: 'May',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 4, 2)),
-    description: 'May',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 4, 23)),
-    description: 'May',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-  {
-    date: Date.parse(new Date(2022, 2, 30)),
-    description: 'March',
-    category: 'Car',
-    tags: 'Fixed Expenses',
-    value: 30,
-  },
-];
-
-const QUERY = gql`
-  query {
-    getTransaction {
-      description
-      date
-      value
-      category {
-        name
-        subCategories {
-          name
-        }
-      }
-      account {
-        name
-      }
-      user {
-        name
-      }
-    }
-  }
-`;
+interface ITransactionData {
+  getTransaction: ITransaction[];
+}
 
 const Transactions: NextPage = () => {
   const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
-  const { data, loading, error } = useQuery(QUERY);
+  const { data, loading, error } = useQuery<ITransactionData>(getTransaction);
 
   useEffect(() => {
     if (data !== undefined && !loading) {
@@ -209,7 +69,7 @@ const Transactions: NextPage = () => {
     return finalObject;
   }
 
-  function formatData(data: ITableData) {
+  function formatData(data: ITransaction[]) {
     let finalObject: Array<ITableRowItem> = [];
     let yearObject: Array<ITableRowItem> = [];
     let currentDate = moment();
@@ -242,11 +102,7 @@ const Transactions: NextPage = () => {
     setTableData(sortObject(finalObject, yearObject));
   }
 
-  return (
-    <PageLayout>
-     {!loading && <Table header={header} tableData={tableData} />}
-    </PageLayout>
-  );
+  return <PageLayout>{!loading && <Table header={header} tableData={tableData} />}</PageLayout>;
 };
 
 export default Transactions;

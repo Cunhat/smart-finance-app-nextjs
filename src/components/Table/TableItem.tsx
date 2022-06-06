@@ -46,9 +46,9 @@ export function TableItem(props: TableItemProps) {
           <>
             <StyledTableCell>{moment(props.data.date, "x").format('DD/MM/YYYY')}</StyledTableCell>
             <StyledTableCell>{props.data.description}</StyledTableCell>
-            <StyledTableCell>{props.data.category.name}</StyledTableCell>
-            {/* <StyledTableCell>{props.data.tags}</StyledTableCell> */}
-            <StyledTableCell>Tag</StyledTableCell>
+            <StyledTableCell>{props.data.subcategory.name}</StyledTableCell>
+            {/* <StyledTableCell>{props.data.tag.name}</StyledTableCell> */}
+            <StyledTableCell>TAG</StyledTableCell>
             <StyledTableCell>{props.data.value.toFixed(2)+ "€"}</StyledTableCell>
             <StyledTableCell>
               <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
@@ -63,7 +63,7 @@ export function TableItem(props: TableItemProps) {
               <BasicTextInput value={props.data.description} />
             </StyledTableCell>
             <StyledTableCell>
-              <SelectInput data={Category} defaultValue={props.data.category.name} />
+              <SelectInput data={Category} defaultValue={props.data.subcategory.name} />
             </StyledTableCell>
             <StyledTableCell>
               <SelectInput data={Tags} defaultValue={"Tag"} />
