@@ -60,7 +60,7 @@ const Transactions: NextPage = () => {
     finalObject = [...finalObject, ...yearObject];
 
     //Order expenses by recent date
-    finalObject.forEach(item => {
+    finalObject.forEach((item) => {
       item.data.sort((a, b) => {
         return moment(a.date).format('YYYYMMDD') < moment(b.date).format('YYYYMMDD') ? 1 : -1;
       });
@@ -74,10 +74,10 @@ const Transactions: NextPage = () => {
     let yearObject: Array<ITableRowItem> = [];
     let currentDate = moment();
 
-    data.forEach(item => {
+    data.forEach((item) => {
       let itemMonth = moment(item.date, 'x').format('MMMM');
       let itemYear = moment(item.date, 'x').format('YYYY');
-      let objKey = finalObject.find(elem => elem.expandableTitle === itemMonth);
+      let objKey = finalObject.find((elem) => elem.expandableTitle === itemMonth);
       let currentYear = moment(currentDate).format('YYYY');
 
       if (objKey === undefined && itemYear === currentYear) {
@@ -86,16 +86,16 @@ const Transactions: NextPage = () => {
           data: [item],
         });
       } else if (itemYear === currentYear) {
-        finalObject.find(element => element.expandableTitle === itemMonth)?.data.push(item);
+        finalObject.find((element) => element.expandableTitle === itemMonth)?.data.push(item);
       } else {
-        let objKeyByYear = yearObject.find(elem => elem.expandableTitle === itemYear);
+        let objKeyByYear = yearObject.find((elem) => elem.expandableTitle === itemYear);
         if (objKeyByYear === undefined) {
           yearObject.push({
             expandableTitle: itemYear,
             data: [item],
           });
         } else {
-          yearObject.find(element => element.expandableTitle === itemYear)?.data.push(item);
+          yearObject.find((element) => element.expandableTitle === itemYear)?.data.push(item);
         }
       }
     });
