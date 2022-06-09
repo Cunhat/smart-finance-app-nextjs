@@ -26,8 +26,12 @@ const theme = {
       secondary: "#EDF1F8",
       page: "#f6f7f8",
     },
+    text: {
+      pageTitle: "#333",
+    }
   },
   fontSizes: {
+    pageTitle: "25px",
     title: "20px",
     regular: "16px",
     buttons: "16px",

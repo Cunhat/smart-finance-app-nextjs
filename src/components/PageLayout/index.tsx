@@ -47,7 +47,7 @@ const data: Array<ISideBarItem> = [
   },
 ];
 
-export function PageLayout(props: PageLayoutProps) {
+export function PageLayout(props: PageLayoutProps): JSX.Element {
   return (
     <PageLayoutContainer>
       <PageLayoutSideBarContainer>
