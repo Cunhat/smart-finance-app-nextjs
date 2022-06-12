@@ -12,7 +12,6 @@ import { SettingsItem } from '../../components/SettingsItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCreditCard, faAddressCard, faRectangleList } from '@fortawesome/free-regular-svg-icons';
 
-
 type SettingsRoute = {
   title: string;
   route: string;
@@ -30,7 +29,7 @@ const settingsRoutes: Array<SettingsRoute> = [
   {
     icon: <FontAwesomeIcon style={{ width: '20px', height: '20px' }} icon={faRectangleList} />,
     title: 'Categories & Tags',
-    route: '/settings/categories&tags',
+    route: '/settings/categoriesTags',
     id: 'categoriesTags',
   },
   {
@@ -38,10 +37,14 @@ const settingsRoutes: Array<SettingsRoute> = [
     title: 'Accounts',
     route: '/settings/accounts',
     id: 'accounts',
-  }
+  },
 ];
 
-export function SettingsPageLayout() {
+type SettingsPageLayoutProps = {
+  children: React.ReactNode;
+};
+
+export function SettingsPageLayout(props: SettingsPageLayoutProps) {
   return (
     <PageLayout>
       <SettingsPageContainer>
@@ -52,10 +55,9 @@ export function SettingsPageLayout() {
               return <SettingsItem key={route.id} title={route.title} route={route.route} icon={route.icon} />;
             })}
           </SettingsPageContentContainerRouting>
-          <SettingsPageContentContainerInfo></SettingsPageContentContainerInfo>
+          <SettingsPageContentContainerInfo>{props.children}</SettingsPageContentContainerInfo>
         </SettingsPageContentContainer>
       </SettingsPageContainer>
     </PageLayout>
   );
 }
-

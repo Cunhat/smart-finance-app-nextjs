@@ -4,7 +4,9 @@ import {SettingsPageLayout} from '../../components/SettingsPageLayout';
 
 function Settings() {
   return (
-   <SettingsPageLayout></SettingsPageLayout>
+   <SettingsPageLayout>
+    <div>General</div>
+   </SettingsPageLayout>
   );
 }
 

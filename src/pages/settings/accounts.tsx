@@ -4,7 +4,7 @@ import { PageLayout } from '../../components/PageLayout';
 import { SettingsPageLayout } from '../../components/SettingsPageLayout';
 
 function Accounts() {
-  return <SettingsPageLayout></SettingsPageLayout>;
+  return <SettingsPageLayout><>Accounts</></SettingsPageLayout>;
 }
 
 export default Accounts;
