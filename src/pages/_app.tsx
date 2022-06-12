@@ -5,6 +5,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 import Theme from '../styles/Theme';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { store } from '../redux/store';
+import { Provider } from 'react-redux';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -14,10 +16,12 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Theme>
-        <Component {...pageProps} />
-        <GlobalStyles />
-      </Theme>
+      <Provider store={store}>
+        <Theme>
+          <Component {...pageProps} />
+          <GlobalStyles />
+        </Theme>
+      </Provider>
     </ApolloProvider>
   );
 }
