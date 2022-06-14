@@ -29,3 +29,16 @@ export const getTransaction = gql`
     }
   }
 `;
+
+export const getAllCategories = gql`
+  query {
+    allCategories {
+      name
+      id
+      subCategories {
+        name
+        id
+      }
+    }
+  }
+`;

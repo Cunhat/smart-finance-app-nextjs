@@ -11,12 +11,13 @@ export interface ISideBarItem {
 export interface ICategory {
   name: string;
   id: string;
+  subCategories: ISubCategory[];
 }
 
 export interface ISubCategory {
   id: string;
   name: string;
-  category: ICategory,
+  category: ICategory;
 }
 
 export interface IAccount {
@@ -27,7 +28,7 @@ export interface IUser {
   name: string;
   id: string;
 }
-export interface ITag{
+export interface ITag {
   name: string;
   id: string;
 }
@@ -40,4 +41,8 @@ export interface ITransaction {
   account: IAccount;
   user: IUser;
   tag: ITag;
+}
+
+export interface IGetAllCategoriesRequest {
+  allCategories: ICategory;
 }

@@ -4,18 +4,14 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 import Theme from '../styles/Theme';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { apolloClient } from '../api/client';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache(),
-});
+import { ApolloProvider } from '@apollo/client';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <Provider store={store}>
         <Theme>
           <Component {...pageProps} />
