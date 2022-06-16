@@ -20,4 +20,6 @@ export const SettingsPageContentContainerRouting = styled.div`
 export const SettingsPageContentContainerInfo = styled.div`
   display: flex;
   flex: 1;
+  flex-direction: column;
+  padding: 0 20px;
 `;
