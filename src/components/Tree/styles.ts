@@ -14,7 +14,7 @@ export const MainItemContainer = styled.div`
 `;
 
 export const SecondaryItemContainer = styled.div`
-  padding: 20px 42px;
+  padding: 20px 20px 20px 42px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -24,4 +24,10 @@ export const SecondaryItemContainer = styled.div`
     cursor: pointer;
     background-color: #ebeff2;
   }
+`;
+
+export const EditActionsContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
 `;

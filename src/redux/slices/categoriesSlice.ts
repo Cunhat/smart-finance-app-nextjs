@@ -31,7 +31,7 @@ export const loadCategories = (categories: ICategory[]) => async (dispatch, getS
   const newCategory = ['Car', 'Fitness', 'Bitcoin'];
 
   // const teste = await apolloClient.query({ query: getAllCategories });
-   debugger;
+   
 
   dispatch(setCategories(categories));
 };

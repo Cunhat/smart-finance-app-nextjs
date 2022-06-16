@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client';
 import { getAllCategories } from '../../api/queries';
 import { IGetAllCategoriesRequest } from '../../models/Interfaces';
 import { Tree } from '../../components/Tree';
+import { PageTitle } from '../../components/Typography';
 
 function CategoriesTags() {
   const { data, loading, error } = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -24,8 +25,8 @@ function CategoriesTags() {
 
   return (
     <SettingsPageLayout>
-      <>Categories and Tags</>
-      {data !== undefined && data?.allCategories  && <Tree data={data.allCategories}></Tree>}
+      <PageTitle title="Categories and Tags" />
+      {data !== undefined && data?.allCategories && <Tree data={data.allCategories}></Tree>}
     </SettingsPageLayout>
   );
 }

@@ -15,6 +15,7 @@ export const SettingsPageContentContainer = styled.div`
 export const SettingsPageContentContainerRouting = styled.div`
   width: 300px;
   border-right: 1px solid #cbd2d8;
+  padding-right: 20px;
 `;
 
 export const SettingsPageContentContainerInfo = styled.div`
@@ -22,4 +23,5 @@ export const SettingsPageContentContainerInfo = styled.div`
   flex: 1;
   flex-direction: column;
   padding: 0 20px;
+  gap: 20px;
 `;
