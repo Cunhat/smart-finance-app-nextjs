@@ -6,6 +6,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
 
+type EditableSectionProps = {
+  canEdit: boolean;
+  handleToggleConfirmEdition: () => void;
+  handleToggleCancelEdition: () => void;
+  handleToggleEdition: () => void;
+};
+
+const EditableSection: React.FC<EditableSectionProps> = (props) => {
+  return (
+    <EditActionsContainer>
+      {props.canEdit ? (
+        <>
+          <FontAwesomeIcon
+            icon={faCheck}
+            style={{ width: '20px', height: '20px', color: 'green' }}
+            onClick={props.handleToggleConfirmEdition}
+          />
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{ width: '20px', height: '20px', color: 'red' }}
+            onClick={props.handleToggleCancelEdition}
+          />
+        </>
+      ) : (
+        <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={props.handleToggleEdition} />
+      )}
+    </EditActionsContainer>
+  );
+};
+
 type EditableSecondaryItemProps = ISecondaryItem;
 
 function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
@@ -15,19 +45,22 @@ function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
     setEdit(!edit);
   }
 
+  function confirmHandler() {
+    props.editableHandler(props.id, props.name);
+    setEdit(false);
+  }
+
   return (
     <SecondaryItemContainer>
       {edit ? <BasicTextInput value={props.name} /> : <Text text={props.name} fontSize='18' />}
-      <EditActionsContainer>
-        {edit ? (
-          <>
-            <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleToggleEdit} />
-            <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleToggleEdit} />
-          </>
-        ) : (
-          <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleToggleEdit} />
-        )}
-      </EditActionsContainer>
+      {props.editable && (
+        <EditableSection
+          canEdit={edit}
+          handleToggleConfirmEdition={confirmHandler}
+          handleToggleCancelEdition={confirmHandler}
+          handleToggleEdition={handleToggleEdit}
+        />
+      )}
     </SecondaryItemContainer>
   );
 }
@@ -52,6 +85,11 @@ function MainItem(props: MainItemProps): JSX.Element {
     return props?.data?.secondaryItems?.length > 0;
   }
 
+  function confirmHandler() {
+    props.data.editableHandler(props.data.id, props.data.name);
+    setEdit(false);
+  }
+
   return (
     <>
       <MainItemContainer>
@@ -64,22 +102,18 @@ function MainItem(props: MainItemProps): JSX.Element {
           />
         )}
         {edit ? <BasicTextInput value={props.data.name} /> : <Text text={props.data.name} fontSize='18' />}
-        {
-          <EditActionsContainer>
-            {edit ? (
-              <>
-                <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleToggleEdit} />
-                <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleToggleEdit} />
-              </>
-            ) : (
-              <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleToggleEdit} />
-            )}
-          </EditActionsContainer>
-        }
+        {props.data.editable && (
+          <EditableSection
+            canEdit={edit}
+            handleToggleConfirmEdition={confirmHandler}
+            handleToggleCancelEdition={confirmHandler}
+            handleToggleEdition={handleToggleEdit}
+          />
+        )}
       </MainItemContainer>
       {open &&
         checkIfHasSubItems() &&
-        props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem name={subItem.name} key={subItem.name + index} />)}
+        props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem {...subItem} />)}
     </>
   );
 }

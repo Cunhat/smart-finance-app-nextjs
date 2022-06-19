@@ -25,7 +25,7 @@ function CategoriesTags() {
           name: category.name,
           id: category.id,
           editable: true,
-          editableHandler: () => {},
+          editableHandler: editableHandler,
           secondaryItems: [],
         };
 
@@ -35,7 +35,7 @@ function CategoriesTags() {
             name: subItem.name,
             id: subItem.id,
             editable: true,
-            editableHandler: () => {},
+            editableHandler: editableHandler,
           };
           arrayOfSecondaryItems.push(secondaryStruct);
         });
@@ -49,6 +49,10 @@ function CategoriesTags() {
   }, [data, loading]);
 
   //const categories = useSelector((state) => state.categories);
+
+  const editableHandler = (id: string, name: string) => {
+    console.log(id, name);
+  }
 
   return (
     <SettingsPageLayout>
