@@ -4,17 +4,20 @@ import { Text } from '../Typography';
 import { faChevronRight, faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
+import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
 
-function EditableSecondaryItem({ name }: { name: string }): JSX.Element {
+type EditableSecondaryItemProps = ISecondaryItem;
+
+function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);
 
-  function handleToggleEdit():void {
+  function handleToggleEdit(): void {
     setEdit(!edit);
   }
 
   return (
     <SecondaryItemContainer>
-      {edit ? <BasicTextInput value={name} /> : <Text text={name} fontSize='18' />}
+      {edit ? <BasicTextInput value={props.name} /> : <Text text={props.name} fontSize='18' />}
       <EditActionsContainer>
         {edit ? (
           <>
@@ -30,14 +33,14 @@ function EditableSecondaryItem({ name }: { name: string }): JSX.Element {
 }
 
 type MainItemProps = {
-  data: any;
+  data: IMainItem;
 };
 
-function MainItem(props: MainItemProps): JSX.Element  {
+function MainItem(props: MainItemProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
 
-  function handleToggle():void {
+  function handleToggle(): void {
     setOpen(!open);
   }
 
@@ -45,8 +48,8 @@ function MainItem(props: MainItemProps): JSX.Element  {
     setEdit(!edit);
   }
 
-  function checkIfHasSubItems():boolean {
-    return props.data.subCategories.length > 0;
+  function checkIfHasSubItems(): boolean {
+    return props?.data?.secondaryItems?.length > 0;
   }
 
   return (
@@ -61,27 +64,31 @@ function MainItem(props: MainItemProps): JSX.Element  {
           />
         )}
         {edit ? <BasicTextInput value={props.data.name} /> : <Text text={props.data.name} fontSize='18' />}
-        <EditActionsContainer>
-          {edit ? (
-            <>
-              <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleToggleEdit} />
-              <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleToggleEdit} />
-            </>
-          ) : (
-            <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleToggleEdit} />
-          )}
-        </EditActionsContainer>
+        {
+          <EditActionsContainer>
+            {edit ? (
+              <>
+                <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={handleToggleEdit} />
+                <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleToggleEdit} />
+              </>
+            ) : (
+              <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleToggleEdit} />
+            )}
+          </EditActionsContainer>
+        }
       </MainItemContainer>
       {open &&
         checkIfHasSubItems() &&
-        props.data.subCategories.map((subItem, index: number) => (
-          <EditableSecondaryItem name={subItem.name} key={subItem.name + index} />
-        ))}
+        props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem name={subItem.name} key={subItem.name + index} />)}
     </>
   );
 }
 
-export function Tree({ data }): JSX.Element  {
+type TreeProps = {
+  data: Array<IMainItem>;
+};
+
+export function Tree({ data }: TreeProps): JSX.Element {
   return (
     <>
       {data.map((elem) => {

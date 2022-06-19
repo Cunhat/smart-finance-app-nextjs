@@ -44,5 +44,5 @@ export interface ITransaction {
 }
 
 export interface IGetAllCategoriesRequest {
-  allCategories: ICategory;
+  allCategories: Array<ICategory>;
 }
