@@ -14,7 +14,7 @@ export const MainItemContainer = styled.div`
 `;
 
 export const SecondaryItemContainer = styled.div`
-  padding: 20px 20px 20px 42px;
+  padding: 10px 20px 10px 62px;
   display: flex;
   align-items: center;
   gap: 10px;

@@ -10,6 +10,8 @@ import { IGetAllCategoriesRequest } from '../../models/Interfaces';
 import { Tree } from '../../components/Tree';
 import { PageTitle } from '../../components/Typography';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
+import { faTag, faRectangleList } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function CategoriesTags() {
   const { data, loading, error } = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -42,7 +44,7 @@ function CategoriesTags() {
         mainItemStruct.secondaryItems = arrayOfSecondaryItems;
         finalDataObjt.push(mainItemStruct);
       });
-      
+
       setDataToDisplay(finalDataObjt);
       dispatch(loadCategories(data.allCategories));
     }
@@ -52,11 +54,18 @@ function CategoriesTags() {
 
   const editableHandler = (id: string, name: string) => {
     console.log(id, name);
-  }
+  };
 
   return (
     <SettingsPageLayout>
-      <PageTitle title='Categories and Tags' />
+      <div>
+        <FontAwesomeIcon icon={faTag} />
+        <PageTitle title='Tags' />
+      </div>
+      <div>
+        <FontAwesomeIcon style={{ width: '20px', height: '20px' }} icon={faRectangleList} />
+        <PageTitle title='Categories' />
+      </div>
       {dataToDisplay !== undefined && dataToDisplay?.length > 0 && loading ? <div>Loading...</div> : <Tree data={dataToDisplay}></Tree>}
     </SettingsPageLayout>
   );
