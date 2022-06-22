@@ -13,6 +13,7 @@ import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interface
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
 import { Tag } from '../../components/Tag';
+import { LinearContainer } from '../../components/Containers';
 
 function CategoriesTags() {
   const { data, loading, error } = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -60,7 +61,10 @@ function CategoriesTags() {
   return (
     <SettingsPageLayout>
       <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
-      <Tag tagName='djasdjkakjd'></Tag>
+      <LinearContainer>
+        <Tag tagName='djasdjkakjd'></Tag>
+      </LinearContainer>
+
       <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
       {dataToDisplay !== undefined && dataToDisplay?.length > 0 && loading ? <div>Loading...</div> : <Tree data={dataToDisplay}></Tree>}
     </SettingsPageLayout>
