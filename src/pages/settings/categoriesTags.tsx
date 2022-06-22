@@ -8,10 +8,11 @@ import { useQuery } from '@apollo/client';
 import { getAllCategories } from '../../api/queries';
 import { IGetAllCategoriesRequest } from '../../models/Interfaces';
 import { Tree } from '../../components/Tree';
-import { PageTitle } from '../../components/Typography';
+import { TextIcon } from '../../components/Typography';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
-import { faTag, faRectangleList } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
+import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
+import { Tag } from '../../components/Tag';
 
 function CategoriesTags() {
   const { data, loading, error } = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -58,14 +59,9 @@ function CategoriesTags() {
 
   return (
     <SettingsPageLayout>
-      <div>
-        <FontAwesomeIcon icon={faTag} />
-        <PageTitle title='Tags' />
-      </div>
-      <div>
-        <FontAwesomeIcon style={{ width: '20px', height: '20px' }} icon={faRectangleList} />
-        <PageTitle title='Categories' />
-      </div>
+      <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
+      <Tag tagName='djasdjkakjd'></Tag>
+      <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
       {dataToDisplay !== undefined && dataToDisplay?.length > 0 && loading ? <div>Loading...</div> : <Tree data={dataToDisplay}></Tree>}
     </SettingsPageLayout>
   );

@@ -14,5 +14,11 @@ type TextElementProps = {
 export const TextElement = styled.b<TextElementProps>`
   font-size: ${(props) => props.fontSize ?? props.theme.fontSizes.pageTitle};
   color: ${(props) => props.color ?? props.theme.colors.text.pageTitle};
-  font-family: ${props => props.bold ? 'Smart Finance Bold' : 'Smart Finance Regular'};
+  font-family: ${(props) => (props.bold ? 'Smart Finance Bold' : 'Smart Finance Regular')};
+`;
+
+export const TextIconContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
 `;
