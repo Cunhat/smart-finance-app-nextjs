@@ -14,12 +14,15 @@ import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
 import { Tag } from '../../components/Tag';
 import { LinearContainer } from '../../components/Containers';
+import { Modal } from '../../components/Modal';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
   const tags = useQuery<IGetAllTagsRequest>(getTags);
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalOpen2, setModalOpen2] = useState<boolean>(false);
 
   useEffect(() => {
     if (categories.data !== undefined && !categories.loading) {
@@ -61,6 +64,22 @@ function CategoriesTags() {
 
   return (
     <SettingsPageLayout>
+      <button onClick={() => setModalOpen(!modalOpen)}>Edit</button>
+      <button onClick={() => setModalOpen2(!modalOpen2)}>Edit</button>
+      <Modal id='tags' open={modalOpen} onClose={() => setModalOpen(!modalOpen)}>
+        Teste
+      </Modal>
+      <Modal
+        id='tags'
+        open={modalOpen2}
+        onClose={() => {
+          setModalOpen2(!modalOpen2);
+          
+        }}
+      >
+        Teste uheuhueuheueuheu
+      </Modal>
+
       <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
       <LinearContainer>
         {tags.data?.getTags.map((tag) => {
