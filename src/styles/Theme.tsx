@@ -34,7 +34,7 @@ const theme = {
     pageTitle: "25px",
     title: "20px",
     regular: "16px",
-    buttons: "16px",
+    button: "16px",
     input: {
       label: "14px",
       placeholder: "16px",

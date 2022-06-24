@@ -15,6 +15,9 @@ import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
 import { Tag } from '../../components/Tag';
 import { LinearContainer } from '../../components/Containers';
 import { Modal } from '../../components/Modal';
+import { Button } from '../../components/Buttons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -64,8 +67,8 @@ function CategoriesTags() {
 
   return (
     <SettingsPageLayout>
-      <button onClick={() => setModalOpen(!modalOpen)}>Edit</button>
-      <button onClick={() => setModalOpen2(!modalOpen2)}>Edit</button>
+      <Button onClick={() => setModalOpen(!modalOpen)} title='Edit' leftIcon={faPlus}/>
+      <Button onClick={() => setModalOpen2(!modalOpen2)} title='Edit' leftIcon={faPlus}/>
       <Modal id='tags' open={modalOpen} onClose={() => setModalOpen(!modalOpen)}>
         Teste
       </Modal>
@@ -74,19 +77,16 @@ function CategoriesTags() {
         open={modalOpen2}
         onClose={() => {
           setModalOpen2(!modalOpen2);
-          
         }}
       >
         Teste uheuhueuheueuheu
       </Modal>
-
       <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
       <LinearContainer>
         {tags.data?.getTags.map((tag) => {
           return <Tag key={tag.id} tagName={tag.name} />;
         })}
       </LinearContainer>
-
       <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
       {dataToDisplay !== undefined && dataToDisplay?.length > 0 && categories.loading ? (
         <div>Loading...</div>
