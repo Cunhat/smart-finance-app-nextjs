@@ -42,3 +42,12 @@ export const getAllCategories = gql`
     }
   }
 `;
+
+export const getTags = gql`
+  query {
+    getTags {
+      id
+      name
+    }
+  }
+`;

@@ -5,8 +5,8 @@ import { SettingsPageLayout } from '../../components/SettingsPageLayout';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCategories } from '../../redux/slices/categoriesSlice';
 import { useQuery } from '@apollo/client';
-import { getAllCategories } from '../../api/queries';
-import { IGetAllCategoriesRequest } from '../../models/Interfaces';
+import { getAllCategories, getTags } from '../../api/queries';
+import { IGetAllCategoriesRequest, IGetAllTagsRequest } from '../../models/Interfaces';
 import { Tree } from '../../components/Tree';
 import { TextIcon } from '../../components/Typography';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
@@ -16,15 +16,16 @@ import { Tag } from '../../components/Tag';
 import { LinearContainer } from '../../components/Containers';
 
 function CategoriesTags() {
-  const { data, loading, error } = useQuery<IGetAllCategoriesRequest>(getAllCategories);
+  const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
+  const tags = useQuery<IGetAllTagsRequest>(getTags);
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
 
   useEffect(() => {
-    if (data !== undefined && !loading) {
+    if (categories.data !== undefined && !categories.loading) {
       let finalDataObjt: Array<IMainItem> = [];
 
-      data.allCategories.forEach((category) => {
+      categories.data.allCategories.forEach((category) => {
         let mainItemStruct: IMainItem = {
           name: category.name,
           id: category.id,
@@ -48,9 +49,9 @@ function CategoriesTags() {
       });
 
       setDataToDisplay(finalDataObjt);
-      dispatch(loadCategories(data.allCategories));
+      dispatch(loadCategories(categories.data.allCategories));
     }
-  }, [data, loading]);
+  }, [categories.data, categories.loading]);
 
   //const categories = useSelector((state) => state.categories);
 
@@ -62,11 +63,17 @@ function CategoriesTags() {
     <SettingsPageLayout>
       <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
       <LinearContainer>
-        <Tag tagName='djasdjkakjd'></Tag>
+        {tags.data?.getTags.map((tag) => {
+          return <Tag key={tag.id} tagName={tag.name} />;
+        })}
       </LinearContainer>
 
       <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
-      {dataToDisplay !== undefined && dataToDisplay?.length > 0 && loading ? <div>Loading...</div> : <Tree data={dataToDisplay}></Tree>}
+      {dataToDisplay !== undefined && dataToDisplay?.length > 0 && categories.loading ? (
+        <div>Loading...</div>
+      ) : (
+        <Tree data={dataToDisplay}></Tree>
+      )}
     </SettingsPageLayout>
   );
 }

@@ -46,3 +46,7 @@ export interface ITransaction {
 export interface IGetAllCategoriesRequest {
   allCategories: Array<ICategory>;
 }
+
+export interface IGetAllTagsRequest {
+  getTags: Array<ITag>;
+}
