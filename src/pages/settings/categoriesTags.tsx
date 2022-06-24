@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import type { NextPage } from 'next';
-import { PageLayout } from '../../components/PageLayout';
 import { SettingsPageLayout } from '../../components/SettingsPageLayout';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loadCategories } from '../../redux/slices/categoriesSlice';
 import { useQuery } from '@apollo/client';
 import { getAllCategories, getTags } from '../../api/queries';
 import { IGetAllCategoriesRequest, IGetAllTagsRequest } from '../../models/Interfaces';
 import { Tree } from '../../components/Tree';
-import { TextIcon } from '../../components/Typography';
+import { TextIcon, Text } from '../../components/Typography';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
@@ -18,6 +16,7 @@ import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Buttons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TitleSection } from '../../styles/Settings';
+import { BasicTextInput } from '../../components/Inputs/BasicTextInput';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
@@ -59,8 +58,6 @@ function CategoriesTags() {
     }
   }, [categories.data, categories.loading]);
 
-  //const categories = useSelector((state) => state.categories);
-
   const editableHandler = (id: string, name: string) => {
     console.log(id, name);
   };
@@ -68,7 +65,15 @@ function CategoriesTags() {
   return (
     <SettingsPageLayout>
       <Modal id='tags' open={modalOpen} onClose={() => setModalOpen(!modalOpen)}>
-        Teste
+        <Text text='Create a new Tag' />
+        <div style={{ height: '100px', width: '300px', display: 'flex', justifyContent: 'center', alignItems: "center" }}>
+          <BasicTextInput value={''} />
+        </div>
+
+        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+          <Button onClick={() => setModalOpen(!modalOpen)} title='Cancel' color='red' />
+          <Button disabled onClick={() => setModalOpen(!modalOpen)} title='Confirm' />
+        </div>
       </Modal>
       <Modal
         id='tags'

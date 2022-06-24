@@ -15,7 +15,6 @@ export const Modal: React.FC<ModalProps> = ({ children, open, onClose, id }) => 
     <>
       <Overlay />
       <ModalContainer>
-        <button onClick={onClose}>Close Modal</button>
         {children}
       </ModalContainer>
     </>

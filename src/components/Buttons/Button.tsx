@@ -10,11 +10,12 @@ type ButtonProps = {
   textColor?: string;
   leftIcon?: IconDefinition;
   rightIcon?: IconDefinition;
+  disabled?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = (props) => {
   return (
-    <ButtonContainer onClick={props.onClick}>
+    <ButtonContainer disabled={props.disabled} color={props.color} textColor={props.textColor} onClick={props.onClick}>
       {props.leftIcon && <FontAwesomeIcon icon={props.leftIcon} />}
       {props.title}
       {props.rightIcon && <FontAwesomeIcon icon={props.rightIcon} />}
