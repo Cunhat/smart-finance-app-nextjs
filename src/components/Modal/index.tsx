@@ -4,7 +4,6 @@ import { ModalContainer, Overlay } from './styles';
 
 type ModalProps = {
   open: boolean;
-  onClose: () => void;
   id: string;
 };
 

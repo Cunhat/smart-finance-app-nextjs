@@ -16,11 +16,11 @@ import { Modal } from '../../components/Modal';
 import { Button } from '../../components/Buttons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TitleSection } from '../../styles/Settings';
-import { BasicTextInput } from '../../components/Inputs/BasicTextInput';
+import { CreateTag } from '../../components/CreateTag';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
-  const tags = useQuery<IGetAllTagsRequest>(getTags);
+  const tags = useQuery<IGetAllTagsRequest>(getTags, { notifyOnNetworkStatusChange: true });
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -64,17 +64,7 @@ function CategoriesTags() {
 
   return (
     <SettingsPageLayout>
-      <Modal id='tags' open={modalOpen} onClose={() => setModalOpen(!modalOpen)}>
-        <Text text='Create a new Tag' />
-        <div style={{ height: '100px', width: '300px', display: 'flex', justifyContent: 'center', alignItems: "center" }}>
-          <BasicTextInput value={''} />
-        </div>
-
-        <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-          <Button onClick={() => setModalOpen(!modalOpen)} title='Cancel' color='red' />
-          <Button disabled onClick={() => setModalOpen(!modalOpen)} title='Confirm' />
-        </div>
-      </Modal>
+      <CreateTag isOpen={modalOpen} openModal={setModalOpen} />
       <Modal
         id='tags'
         open={modalOpen2}

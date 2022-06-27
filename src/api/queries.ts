@@ -51,3 +51,13 @@ export const getTags = gql`
     }
   }
 `;
+
+export const createNewTag = gql`
+  mutation createTag($name: String!) {
+    createTag(input: {name: $name}) {
+      name
+      id
+    }
+  }
+`;
+
