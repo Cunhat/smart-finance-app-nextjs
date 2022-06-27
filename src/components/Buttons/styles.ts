@@ -20,8 +20,14 @@ export const ButtonContainer = styled.button<ButtonProps>`
   justify-content: center;
   align-items: center;
 
-  :hover {
+  :hover:not([disabled]) {
     cursor: pointer;
     box-shadow: inset 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  :disabled,
+  [disabled] {
+    background-color: #cccccc;
+    color: #fff;
   }
 `;
