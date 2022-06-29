@@ -17,9 +17,10 @@ import { Button } from '../../components/Buttons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TitleSection } from '../../styles/Settings';
 import { CreateTag } from '../../components/CreateTag';
+import { CreateCategory } from '../../components/CreateCategory';
 
 function CategoriesTags() {
-  const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories);
+  const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories, { notifyOnNetworkStatusChange: true });
   const tags = useQuery<IGetAllTagsRequest>(getTags, { notifyOnNetworkStatusChange: true });
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
@@ -65,23 +66,19 @@ function CategoriesTags() {
   return (
     <SettingsPageLayout>
       <CreateTag isOpen={modalOpen} openModal={setModalOpen} />
-      <Modal
-        id='tags'
-        open={modalOpen2}
-        onClose={() => {
-          setModalOpen2(!modalOpen2);
-        }}
-      >
-        Teste uheuhueuheueuheu
-      </Modal>
+      <CreateCategory isOpen={modalOpen2} openModal={setModalOpen2} />
       <TitleSection>
         <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
         <Button onClick={() => setModalOpen(!modalOpen)} title='Tag' leftIcon={faPlus} />
       </TitleSection>
       <LinearContainer>
-        {tags.data?.getTags.map((tag) => {
-          return <Tag key={tag.id} tagName={tag.name} />;
-        })}
+        {categories.loading ? (
+          <div>Loading...</div>
+        ) : (
+          tags.data?.getTags.map((tag) => {
+            return <Tag key={tag.id} tagName={tag.name} />;
+          })
+        )}
       </LinearContainer>
       <TitleSection>
         <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />

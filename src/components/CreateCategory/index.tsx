@@ -4,46 +4,46 @@ import { Modal } from '../Modal';
 import { Button } from '../Buttons';
 import { Text } from '../Typography';
 import { useMutation } from '@apollo/client';
-import { createNewTag, getTags } from '../../api/queries';
+import { createNewCategory, getAllCategories } from '../../api/queries';
 
-type CreateTagProps = {
+type CreateCategoryProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
 };
 
-export const CreateTag: React.FC<CreateTagProps> = (props) => {
-  const [tagName, setTagName] = React.useState<string>('');
-  const [createTag, { data, loading, error }] = useMutation(createNewTag, {
+export const CreateCategory: React.FC<CreateCategoryProps> = (props) => {
+  const [categoryName, setCategoryName] = React.useState<string>('');
+  const [createCategory, { data, loading, error }] = useMutation(createNewCategory, {
     variables: {
-      name: tagName,
+      name: categoryName,
     },
-    refetchQueries: [getTags],
-    onCompleted({ createTag }) {
-      if (createTag) {
+    refetchQueries: [getAllCategories],
+    onCompleted({ createCategory }) {
+      if (createCategory) {
         cancelAndCloseModal();
       }
     },
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setTagName(e.target.value);
+    setCategoryName(e.target.value);
   }
 
   function cancelAndCloseModal() {
-    setTagName('');
+    setCategoryName('');
     props.openModal(false);
   }
 
   return (
     <Modal id='tags' open={props.isOpen}>
-      <Text text='Create a new Tag' />
+      <Text text='Create new Category' />
       <div style={{ height: '100px', width: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <BasicTextInput value={tagName} placeholder='New Tag name...' height='40px' onChange={handleChange} />
+        <BasicTextInput value={categoryName} placeholder='New Category name...' height='40px' onChange={handleChange} />
       </div>
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
         <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
-        <Button disabled={tagName.length === 0} onClick={createTag} title='Confirm' />
+        <Button disabled={categoryName.length === 0} onClick={createCategory} title='Confirm' />
       </div>
     </Modal>
   );

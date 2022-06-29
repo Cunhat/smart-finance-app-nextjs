@@ -54,10 +54,17 @@ export const getTags = gql`
 
 export const createNewTag = gql`
   mutation createTag($name: String!) {
-    createTag(input: {name: $name}) {
+    createTag(input: { name: $name }) {
       name
       id
     }
   }
 `;
 
+export const createNewCategory = gql`
+  mutation ($name: String!) {
+    createCategory(input: { name: $name }) {
+      name
+    }
+  }
+`;
