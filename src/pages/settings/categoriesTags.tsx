@@ -18,6 +18,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TitleSection } from '../../styles/Settings';
 import { CreateTag } from '../../components/CreateTag';
 import { CreateCategory } from '../../components/CreateCategory';
+import { CreateSubCategory } from '../../components/CreateSubCategory';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories, { notifyOnNetworkStatusChange: true });
@@ -26,6 +27,9 @@ function CategoriesTags() {
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalOpen2, setModalOpen2] = useState<boolean>(false);
+  const [modalOpen3, setModalOpen3] = useState<boolean>(false);
+  const [categoryName, setCategoryName] = useState<string>('');
+  const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
     if (categories.data !== undefined && !categories.loading) {
@@ -38,6 +42,7 @@ function CategoriesTags() {
           editable: true,
           editableHandler: editableHandler,
           secondaryItems: [],
+          handlePrimaryCreation: handlePrimaryCreation,
         };
 
         const arrayOfSecondaryItems: Array<ISecondaryItem> = [];
@@ -59,14 +64,21 @@ function CategoriesTags() {
     }
   }, [categories.data, categories.loading]);
 
-  const editableHandler = (id: string, name: string) => {
-    console.log(id, name);
+  const editableHandler = (id: string,) => {
+    console.log(id);
+  };
+
+  const handlePrimaryCreation = (id: string, name: string) => {
+    setCategoryName(name);
+    setCategoryId(id);
+    setModalOpen3(true);
   };
 
   return (
     <SettingsPageLayout>
       <CreateTag isOpen={modalOpen} openModal={setModalOpen} />
       <CreateCategory isOpen={modalOpen2} openModal={setModalOpen2} />
+      <CreateSubCategory isOpen={modalOpen3} openModal={setModalOpen3} categoryName={categoryName} categoryId={categoryId} />
       <TitleSection>
         <TextIcon icon={faTag} fontSize='20px' color='#333' text='Tags' />
         <Button onClick={() => setModalOpen(!modalOpen)} title='Tag' leftIcon={faPlus} />

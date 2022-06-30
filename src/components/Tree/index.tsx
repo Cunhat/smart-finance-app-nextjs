@@ -5,12 +5,16 @@ import { faChevronRight, faPen, faCheck, faXmark } from '@fortawesome/free-solid
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Icon } from '../Icon';
 
 type EditableSectionProps = {
   canEdit: boolean;
   handleToggleConfirmEdition: () => void;
   handleToggleCancelEdition: () => void;
   handleToggleEdition: () => void;
+  isPrimary?: boolean;
+  handlePrimaryCreation: (value: string) => void;
 };
 
 const EditableSection: React.FC<EditableSectionProps> = (props) => {
@@ -30,7 +34,10 @@ const EditableSection: React.FC<EditableSectionProps> = (props) => {
           />
         </>
       ) : (
-        <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={props.handleToggleEdition} />
+        <>
+          {props.isPrimary && <Icon icon={faPlus} onClick={props.handlePrimaryCreation} color='#333' iconSize='20px' />}
+          <Icon icon={faPen} iconSize='15px' onClick={props.handleToggleEdition} />
+        </>
       )}
     </EditActionsContainer>
   );
@@ -108,12 +115,12 @@ function MainItem(props: MainItemProps): JSX.Element {
             handleToggleConfirmEdition={confirmHandler}
             handleToggleCancelEdition={confirmHandler}
             handleToggleEdition={handleToggleEdit}
+            handlePrimaryCreation={() => props.data.handlePrimaryCreation(props.data.id, props.data.name)}
+            isPrimary
           />
         )}
       </MainItemContainer>
-      {open &&
-        checkIfHasSubItems() &&
-        props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem {...subItem} />)}
+      {open && checkIfHasSubItems() && props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem {...subItem} />)}
     </>
   );
 }

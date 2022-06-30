@@ -68,3 +68,12 @@ export const createNewCategory = gql`
     }
   }
 `;
+
+export const createSubCategory = gql`
+  mutation ($name: String!, $categoryId: String!) {
+    createSubCategory(input: { name: $name, id_category: $categoryId }) {
+      name
+      id_category
+    }
+  }
+`;

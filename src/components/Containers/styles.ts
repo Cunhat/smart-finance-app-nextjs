@@ -6,4 +6,5 @@ export const LinearContainerArea = styled.div`
     border: 1px solid #cbd2d8;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 `;

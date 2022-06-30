@@ -30,4 +30,5 @@ export const EditActionsContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-left: auto;
+  align-items: center;
 `;
