@@ -19,10 +19,17 @@ import { TitleSection } from '../../styles/Settings';
 import { CreateTag } from '../../components/CreateTag';
 import { CreateCategory } from '../../components/CreateCategory';
 import { CreateSubCategory } from '../../components/CreateSubCategory';
+import { trpc } from '@/utils/trpc';
 
 function CategoriesTags() {
   const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories, { notifyOnNetworkStatusChange: true });
-  const tags = useQuery<IGetAllTagsRequest>(getTags, { notifyOnNetworkStatusChange: true });
+
+  const tags = trpc.useQuery(['getTags'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -64,7 +71,7 @@ function CategoriesTags() {
     }
   }, [categories.data, categories.loading]);
 
-  const editableHandler = (id: string,) => {
+  const editableHandler = (id: string) => {
     console.log(id);
   };
 
@@ -84,10 +91,10 @@ function CategoriesTags() {
         <Button onClick={() => setModalOpen(!modalOpen)} title='Tag' leftIcon={faPlus} />
       </TitleSection>
       <LinearContainer>
-        {categories.loading ? (
+        {tags.isLoading ? (
           <div>Loading...</div>
         ) : (
-          tags.data?.getTags.map((tag) => {
+          tags.data?.map((tag) => {
             return <Tag key={tag.id} tagName={tag.name} />;
           })
         )}
