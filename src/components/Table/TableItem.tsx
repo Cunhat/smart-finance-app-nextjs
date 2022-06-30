@@ -8,7 +8,6 @@ import { faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
 import { CalendarInput } from '../Inputs/Calendar';
-import { Tags, Category } from '../../utils/mock';
 import moment from 'moment';
 import { EditActions } from './sytles';
 

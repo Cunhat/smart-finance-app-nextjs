@@ -20,6 +20,10 @@
     "@material-ui/icons": "^4.11.3",
     "@radix-ui/react-select": "^0.1.1",
     "@reduxjs/toolkit": "^1.8.2",
+    "@trpc/client": "^9.25.3",
+    "@trpc/next": "^9.25.3",
+    "@trpc/react": "^9.25.3",
+    "@trpc/server": "^9.25.3",
     "@types/react-redux": "^7.1.24",
     "graphql": "^16.5.0",
     "moment": "^2.29.3",
@@ -28,9 +32,11 @@
     "primereact": "^8.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-query": "^3.39.1",
     "react-redux": "^8.0.2",
     "storybook-addon-styled-component-theme": "^2.0.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
