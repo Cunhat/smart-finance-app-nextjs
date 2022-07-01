@@ -80,6 +80,26 @@ export const appRouter = trpc
         }),
       );
     },
+  })
+  .query('getAccounts', {
+    async resolve() {
+      return await prisma.account.findMany();
+    },
+  })
+  .mutation('createAccount', {
+    input: z.object({
+      name: z.string(),
+      type: z.string(),
+    }),
+    async resolve({ input }) {
+      return await prisma.account.create({
+        data: {
+          name: input.name,
+          type: input.type,
+          id_user: userId,
+        },
+      });
+    },
   });
 
 // export type definition of API

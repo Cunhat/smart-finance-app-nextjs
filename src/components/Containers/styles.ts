@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 
+
+
 export const LinearContainerArea = styled.div`
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
-    border: 1px solid #cbd2d8;
-    display: flex;
+    border: 1px solid #EBEFF2;
+    /* display: flex;
     gap: 10px;
-    flex-wrap: wrap;
+    flex-wrap: wrap; */
+    background-color: #fff;
+    //box-shadow: ${props => props.theme.shadows.general};
 `;

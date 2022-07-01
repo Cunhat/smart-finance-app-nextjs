@@ -19,7 +19,6 @@ import { CreateSubCategory } from '@/components/CreateSubCategory';
 import { trpc } from '@/utils/trpc';
 
 function CategoriesTags() {
-
   const categories = trpc.useQuery(['getCategories'], {
     refetchInterval: false,
     refetchOnReconnect: false,
@@ -93,13 +92,15 @@ function CategoriesTags() {
         <Button onClick={() => setModalOpen(!modalOpen)} title='Tag' leftIcon={faPlus} />
       </TitleSection>
       <LinearContainer>
-        {tags.isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          tags.data?.map((tag) => {
-            return <Tag key={tag.id} tagName={tag.name} />;
-          })
-        )}
+        <div style={{display: 'flex', gap: "10px", flexWrap: "wrap"}}>
+          {tags.isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            tags.data?.map((tag) => {
+              return <Tag key={tag.id} tagName={tag.name} />;
+            })
+          )}
+        </div>
       </LinearContainer>
       <TitleSection>
         <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
