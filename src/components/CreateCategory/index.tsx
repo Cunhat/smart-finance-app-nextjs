@@ -3,8 +3,7 @@ import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { Modal } from '../Modal';
 import { Button } from '../Buttons';
 import { Text } from '../Typography';
-import { useMutation } from '@apollo/client';
-import { createNewCategory, getAllCategories } from '../../api/queries';
+import { trpc } from '@/utils/trpc';
 
 type CreateCategoryProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,17 +12,8 @@ type CreateCategoryProps = {
 
 export const CreateCategory: React.FC<CreateCategoryProps> = (props) => {
   const [categoryName, setCategoryName] = React.useState<string>('');
-  const [createCategory, { data, loading, error }] = useMutation(createNewCategory, {
-    variables: {
-      name: categoryName,
-    },
-    refetchQueries: [getAllCategories],
-    onCompleted({ createCategory }) {
-      if (createCategory) {
-        cancelAndCloseModal();
-      }
-    },
-  });
+  const createCategory = trpc.useMutation(['createCategory']);
+  const utils = trpc.useContext();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setCategoryName(e.target.value);
@@ -34,6 +24,13 @@ export const CreateCategory: React.FC<CreateCategoryProps> = (props) => {
     props.openModal(false);
   }
 
+  React.useEffect(() => {
+    if (createCategory.isSuccess) {
+      cancelAndCloseModal();
+      utils.refetchQueries(['getCategories']);
+    }
+  }, [createCategory.isSuccess]);
+
   return (
     <Modal id='tags' open={props.isOpen}>
       <Text text='Create new Category' />
@@ -43,7 +40,7 @@ export const CreateCategory: React.FC<CreateCategoryProps> = (props) => {
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
         <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
-        <Button disabled={categoryName.length === 0} onClick={createCategory} title='Confirm' />
+        <Button disabled={categoryName.length === 0} onClick={() => createCategory.mutate({ name: categoryName })} title='Confirm' />
       </div>
     </Modal>
   );

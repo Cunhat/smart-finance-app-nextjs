@@ -2,6 +2,8 @@ import * as trpc from '@trpc/server';
 import { z } from 'zod';
 import { prisma } from '@/backend/utils/prisma';
 
+const userId = 'b957f6a8-2b53-4278-bed6-3fad0a22e9c6';
+
 export const appRouter = trpc
   .router()
   .query('hello', {
@@ -32,10 +34,21 @@ export const appRouter = trpc
     input: z.object({
       name: z.string(),
     }),
-    resolve({ input }) {
+    async resolve({ input }) {
       return prisma.tag.create({
         data: {
           name: input?.name,
+        },
+      });
+    },
+  })
+  .mutation('createCategory', {
+    input: z.object({ name: z.string() }),
+    async resolve({ input }) {
+      return prisma.category.create({
+        data: {
+          name: input.name,
+          id_user: userId,
         },
       });
     },
