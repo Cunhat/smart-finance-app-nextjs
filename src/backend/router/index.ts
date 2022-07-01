@@ -52,6 +52,17 @@ export const appRouter = trpc
         },
       });
     },
+  })
+  .mutation('createSubCategory', {
+    input: z.object({ name: z.string(), id_category: z.string()}),
+    async resolve({ input }) {
+      return prisma.subCategory.create({
+        data: {
+          name: input.name,
+          id_category: input.id_category,
+        },
+      });
+    },
   });
 
 // export type definition of API
