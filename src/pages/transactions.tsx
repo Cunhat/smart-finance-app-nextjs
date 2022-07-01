@@ -5,8 +5,7 @@ import { Table } from '../components/Table';
 import { ITableHeader, ITableRowItem } from '../models/TableInterfaces/interfaces';
 import { ITransaction } from '../models/Interfaces';
 import moment from 'moment';
-import { useQuery } from '@apollo/client';
-import { getTransaction } from '../api/queries';
+import { trpc } from '@/utils/trpc';
 
 const header: ITableHeader = [
   {
@@ -30,19 +29,20 @@ const header: ITableHeader = [
   },
 ];
 
-interface ITransactionData {
-  getTransaction: ITransaction[];
-}
-
 const Transactions: NextPage = () => {
   const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
-  const { data, loading, error } = useQuery<ITransactionData>(getTransaction);
+
+  const { data, isLoading, error } = trpc.useQuery(['getTransactions'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
   useEffect(() => {
-    if (data !== undefined && !loading) {
-      formatData(data.getTransaction);
+    if (data !== undefined && !isLoading) {
+      formatData(data);
     }
-  }, [data, loading]);
+  }, [data, isLoading]);
 
   function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
     finalObject.sort((a, b) => {
@@ -75,8 +75,8 @@ const Transactions: NextPage = () => {
     let currentDate = moment();
 
     data.forEach((item) => {
-      let itemMonth = moment(item.date, 'x').format('MMMM');
-      let itemYear = moment(item.date, 'x').format('YYYY');
+      let itemMonth = moment(item.date).format('MMMM');
+      let itemYear = moment(item.date).format('YYYY');
       let objKey = finalObject.find((elem) => elem.expandableTitle === itemMonth);
       let currentYear = moment(currentDate).format('YYYY');
 
@@ -102,7 +102,7 @@ const Transactions: NextPage = () => {
     setTableData(sortObject(finalObject, yearObject));
   }
 
-  return <PageLayout>{!loading && <Table header={header} tableData={tableData} />}</PageLayout>;
+  return <PageLayout>{!isLoading && <Table header={header} tableData={tableData} />}</PageLayout>;
 };
 
 export default Transactions;

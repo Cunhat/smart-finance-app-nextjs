@@ -43,12 +43,12 @@ export function TableItem(props: TableItemProps) {
       <StyledTableRow>
         {!edit ? (
           <>
-            <StyledTableCell>{moment(props.data.date, "x").format('DD/MM/YYYY')}</StyledTableCell>
+            <StyledTableCell>{moment(props.data.date).format('DD/MM/YYYY')}</StyledTableCell>
             <StyledTableCell>{props.data.description}</StyledTableCell>
             <StyledTableCell>{props.data.subcategory.name}</StyledTableCell>
             {/* <StyledTableCell>{props.data.tag.name}</StyledTableCell> */}
             <StyledTableCell>TAG</StyledTableCell>
-            <StyledTableCell>{props.data.value.toFixed(2)+ "€"}</StyledTableCell>
+            <StyledTableCell>{parseInt(props.data.value).toFixed(2)+ "€"}</StyledTableCell>
             <StyledTableCell>
               <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
             </StyledTableCell>

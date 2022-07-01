@@ -9,7 +9,7 @@ type TableRowItemProps = {
 };
 
 export function TableRowItem(props: TableRowItemProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <>
       <TableRow onClick={() => setOpen(!open)}>

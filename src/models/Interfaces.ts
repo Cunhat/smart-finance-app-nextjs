@@ -1,4 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { Prisma } from '@prisma/client'
+
 
 export interface ISideBarItem {
   title: string;
@@ -35,11 +37,10 @@ export interface ITag {
 
 export interface ITransaction {
   description: string;
-  date: string;
-  value: number;
+  date: Date;
+  value: Prisma.Decimal;
   subcategory: ISubCategory;
   account: IAccount;
-  user: IUser;
   tag: ITag;
 }
 

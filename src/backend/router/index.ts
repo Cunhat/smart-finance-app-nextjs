@@ -20,12 +20,12 @@ export const appRouter = trpc
   })
   .query('getTags', {
     async resolve() {
-      return prisma.tag.findMany();
+      return await prisma.tag.findMany();
     },
   })
   .query('getCategories', {
     async resolve() {
-      return prisma.category.findMany({
+      return await prisma.category.findMany({
         include: { subCategories: true },
       });
     },
@@ -45,7 +45,7 @@ export const appRouter = trpc
   .mutation('createCategory', {
     input: z.object({ name: z.string() }),
     async resolve({ input }) {
-      return prisma.category.create({
+      return await prisma.category.create({
         data: {
           name: input.name,
           id_user: userId,
@@ -54,14 +54,43 @@ export const appRouter = trpc
     },
   })
   .mutation('createSubCategory', {
-    input: z.object({ name: z.string(), id_category: z.string()}),
+    input: z.object({ name: z.string(), id_category: z.string() }),
     async resolve({ input }) {
-      return prisma.subCategory.create({
+      return await prisma.subCategory.create({
         data: {
           name: input.name,
           id_category: input.id_category,
         },
       });
+    },
+  })
+  .query('getTransactions', {
+    async resolve() {
+      const transactionObj = await prisma.transaction.findMany();
+
+      return Promise.all(
+        transactionObj.map(async (transaction) => {
+          const subCategory = await prisma.subCategory.findUnique({
+            where: { id: transaction.id_subCategory },
+            include: { category: true },
+          });
+
+          const account = await prisma.account.findUnique({
+            where: { id: transaction.id_account },
+          });
+
+          const tag = await prisma.tag.findUnique({
+            where: { id: transaction.id_tag },
+          });
+
+          return {
+            ...transaction,
+            account: account,
+            subcategory: subCategory,
+            tag: tag,
+          };
+        }),
+      );
     },
   });
 
