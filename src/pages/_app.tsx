@@ -4,23 +4,20 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
 import Theme from '../styles/Theme';
-import { apolloClient } from '../api/client';
 import { store } from '../redux/store';
 import { Provider } from 'react-redux';
-import { ApolloProvider } from '@apollo/client';
+
 import { withTRPC } from '@trpc/next';
 import type { AppRouter } from '@/backend/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ApolloProvider client={apolloClient}>
-      <Provider store={store}>
-        <Theme>
-          <Component {...pageProps} />
-          <GlobalStyles />
-        </Theme>
-      </Provider>
-    </ApolloProvider>
+    <Provider store={store}>
+      <Theme>
+        <Component {...pageProps} />
+        <GlobalStyles />
+      </Theme>
+    </Provider>
   );
 }
 

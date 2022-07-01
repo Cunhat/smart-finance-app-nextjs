@@ -6,18 +6,6 @@ const userId = 'b957f6a8-2b53-4278-bed6-3fad0a22e9c6';
 
 export const appRouter = trpc
   .router()
-  .query('hello', {
-    input: z
-      .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `hello ${input?.text ?? 'world'}`,
-      };
-    },
-  })
   .query('getTags', {
     async resolve() {
       return await prisma.tag.findMany();
