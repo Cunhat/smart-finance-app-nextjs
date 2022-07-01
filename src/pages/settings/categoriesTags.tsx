@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { SettingsPageLayout } from '../../components/SettingsPageLayout';
+import { SettingsPageLayout } from '@/components/SettingsPageLayout';
 import { useDispatch } from 'react-redux';
-import { loadCategories } from '../../redux/slices/categoriesSlice';
-import { useQuery } from '@apollo/client';
-import { getAllCategories, getTags } from '../../api/queries';
-import { IGetAllCategoriesRequest, IGetAllTagsRequest } from '../../models/Interfaces';
-import { Tree } from '../../components/Tree';
-import { TextIcon, Text } from '../../components/Typography';
-import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
+import { loadCategories } from '@/redux/slices/categoriesSlice';
+import { Tree } from '@/components/Tree';
+import { TextIcon } from '@/components/Typography';
+import { IMainItem, ISecondaryItem } from '@/models/TreeInterfaces/interfaces';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faRectangleList } from '@fortawesome/free-regular-svg-icons';
-import { Tag } from '../../components/Tag';
-import { LinearContainer } from '../../components/Containers';
-import { Modal } from '../../components/Modal';
-import { Button } from '../../components/Buttons';
+import { Tag } from '@/components/Tag';
+import { LinearContainer } from '@/components/Containers';
+
+import { Button } from '@/components/Buttons';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { TitleSection } from '../../styles/Settings';
-import { CreateTag } from '../../components/CreateTag';
-import { CreateCategory } from '../../components/CreateCategory';
-import { CreateSubCategory } from '../../components/CreateSubCategory';
+import { TitleSection } from '@/styles/Settings';
+import { CreateTag } from '@/components/CreateTag';
+import { CreateCategory } from '@/components/CreateCategory';
+import { CreateSubCategory } from '@/components/CreateSubCategory';
 import { trpc } from '@/utils/trpc';
 
 function CategoriesTags() {
-  const categories = useQuery<IGetAllCategoriesRequest>(getAllCategories, { notifyOnNetworkStatusChange: true });
+
+  const categories = trpc.useQuery(['getCategories'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
   const tags = trpc.useQuery(['getTags'], {
     refetchInterval: false,
@@ -39,10 +41,10 @@ function CategoriesTags() {
   const [categoryId, setCategoryId] = useState<string>('');
 
   useEffect(() => {
-    if (categories.data !== undefined && !categories.loading) {
+    if (categories.data !== undefined && !categories.isLoading) {
       let finalDataObjt: Array<IMainItem> = [];
 
-      categories.data.allCategories.forEach((category) => {
+      categories.data.forEach((category) => {
         let mainItemStruct: IMainItem = {
           name: category.name,
           id: category.id,
@@ -67,9 +69,9 @@ function CategoriesTags() {
       });
 
       setDataToDisplay(finalDataObjt);
-      dispatch(loadCategories(categories.data.allCategories));
+      dispatch(loadCategories(categories.data));
     }
-  }, [categories.data, categories.loading]);
+  }, [categories.data, categories.isLoading]);
 
   const editableHandler = (id: string) => {
     console.log(id);
@@ -103,7 +105,7 @@ function CategoriesTags() {
         <TextIcon icon={faRectangleList} fontSize='20px' color='#333' text='Categories' />
         <Button onClick={() => setModalOpen2(!modalOpen2)} title='Category' leftIcon={faPlus} />
       </TitleSection>
-      {dataToDisplay !== undefined && dataToDisplay?.length > 0 && categories.loading ? (
+      {dataToDisplay !== undefined && dataToDisplay?.length > 0 && categories.isLoading ? (
         <div>Loading...</div>
       ) : (
         <Tree data={dataToDisplay}></Tree>

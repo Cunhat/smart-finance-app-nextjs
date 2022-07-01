@@ -3,8 +3,7 @@ import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { Modal } from '../Modal';
 import { Button } from '../Buttons';
 import { Text } from '../Typography';
-import { useMutation } from '@apollo/client';
-import { createNewTag, getTags } from '../../api/queries';
+import { trpc } from '@/utils/trpc';
 
 type CreateTagProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,17 +12,8 @@ type CreateTagProps = {
 
 export const CreateTag: React.FC<CreateTagProps> = (props) => {
   const [tagName, setTagName] = React.useState<string>('');
-  const [createTag, { data, loading, error }] = useMutation(createNewTag, {
-    variables: {
-      name: tagName,
-    },
-    refetchQueries: [getTags],
-    onCompleted({ createTag }) {
-      if (createTag) {
-        cancelAndCloseModal();
-      }
-    },
-  });
+  const createTag = trpc.useMutation(['createTag']);
+  const utils = trpc.useContext();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setTagName(e.target.value);
@@ -34,6 +24,13 @@ export const CreateTag: React.FC<CreateTagProps> = (props) => {
     props.openModal(false);
   }
 
+  React.useEffect(() => {
+    if (createTag.isSuccess) {
+      cancelAndCloseModal();
+      utils.refetchQueries(['getTags']);
+    }
+  }, [createTag.isSuccess]);
+
   return (
     <Modal id='tags' open={props.isOpen}>
       <Text text='Create a new Tag' />
@@ -43,7 +40,7 @@ export const CreateTag: React.FC<CreateTagProps> = (props) => {
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
         <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
-        <Button disabled={tagName.length === 0} onClick={createTag} title='Confirm' />
+        <Button disabled={tagName.length === 0} onClick={() => createTag.mutate({ name: tagName })} title='Confirm' />
       </div>
     </Modal>
   );
