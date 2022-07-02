@@ -6,6 +6,11 @@ import { ITableHeader, ITableRowItem } from '../models/TableInterfaces/interface
 import { ITransaction } from '../models/Interfaces';
 import moment from 'moment';
 import { trpc } from '@/utils/trpc';
+import { Button } from '@/components/Buttons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { TableFiltersContainer } from '@/styles/Settings';
+import { PageTitle } from '@/components/Typography';
+import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
 
 const header: ITableHeader = [
   {
@@ -102,7 +107,17 @@ const Transactions: NextPage = () => {
     setTableData(sortObject(finalObject, yearObject));
   }
 
-  return <PageLayout>{!isLoading && <Table header={header} tableData={tableData} />}</PageLayout>;
+  return (
+    <PageLayout>
+      <PageTitle title='Transactions' />
+      <TableFiltersContainer>
+        <BasicTextInput value="" placeholder="Search transaction..." onChange={()=> {}} width="200px"/>
+        <Button onClick={() => {}} title='' leftIcon={faPlus} />
+      </TableFiltersContainer>
+
+      {!isLoading && <Table header={header} tableData={tableData} />}
+    </PageLayout>
+  );
 };
 
 export default Transactions;

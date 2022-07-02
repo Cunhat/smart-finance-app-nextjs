@@ -14,4 +14,7 @@ export const PageMainContainer = styled.div`
   background-color: ${(props) => props.theme.colors.background.page};
   padding: 20px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px
 `;

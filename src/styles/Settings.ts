@@ -19,3 +19,10 @@ export const AccountInnerContainer = styled.div`
   flex-direction: column;
   gap: 5px;
 `;
+
+
+export const TableFiltersContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+`;
