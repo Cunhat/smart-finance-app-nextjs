@@ -38,9 +38,9 @@ export const SelectTrigger = styled(Select.SelectTrigger)`
 `;
 
 export const SelectItem = styled(Select.Item)`
-  padding: 5px;
+  padding: 10px;
+  outline: none !important;
   :hover {
-    border: none !important;
     color: ${props => props.theme.colors.primary[500]};
   }
 `;

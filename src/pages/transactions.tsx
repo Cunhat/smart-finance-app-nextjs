@@ -11,6 +11,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TableFiltersContainer } from '@/styles/Settings';
 import { PageTitle } from '@/components/Typography';
 import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
+import { SelectInput } from '@/components/Inputs/Select';
 
 const header: ITableHeader = [
   {
@@ -111,7 +112,7 @@ const Transactions: NextPage = () => {
     <PageLayout>
       <PageTitle title='Transactions' />
       <TableFiltersContainer>
-        <BasicTextInput value="" placeholder="Search transaction..." onChange={()=> {}} width="200px"/>
+        <BasicTextInput value='' placeholder='Search transaction...' onChange={() => {}} width='200px' />
         <Button onClick={() => {}} title='' leftIcon={faPlus} />
       </TableFiltersContainer>
 
