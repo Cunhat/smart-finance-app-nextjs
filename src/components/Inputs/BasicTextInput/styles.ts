@@ -1,12 +1,14 @@
 import styled from 'styled-components';
+import { InputText } from 'primereact/inputtext';
 
 type InputTextProps = {
   width?: string;
   height?: string;
   fontSize?: string;
+  isInvalid: boolean;
 };
 
-export const InputText = styled.input<InputTextProps>`
+export const InputTextContainer = styled(InputText)<InputTextProps>`
   border-radius: 5px;
   height: ${(props) => (props.height ? props.height : '25px')};
   width: ${(props) => (props.width ? props.width : '100%')};
@@ -15,12 +17,23 @@ export const InputText = styled.input<InputTextProps>`
   border-width: 1px;
   padding-left: 10px;
   outline: none !important;
-  border: 1px solid ${(props) => props.theme.colors.secondary[500]};
+  border: 1px solid ${(props) => (props.isInvalid ? 'red' : props.theme.colors.secondary[500])};
 
   :focus {
     outline: none !important;
-    border: 2px solid ${(props) => props.theme.colors.primary[500]};
-    box-shadow: 0 0 10px #719ece;
+    border: 1px solid ${(props) => (props.isInvalid ? 'red' : props.theme.colors.primary[500])} !important;
+    border-color: ${(props) => (props.isInvalid ? 'red' : props.theme.colors.primary[500])} !important;
+    box-shadow: none !important;
+    //box-shadow: 0 0 10px #719ece;
     //border-color: ${(props) => props.theme.colors.primary[500]};
+  }
+
+  :hover {
+    border: 1px solid;
+    border-color: ${(props) => (props.isInvalid ? 'red !important' : props.theme.colors.primary[500])+ "!important"};
+  }
+
+  ::placeholder {
+    color: ${(props) => (props.isInvalid ? 'red' : '')};
   }
 `;
