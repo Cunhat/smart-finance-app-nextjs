@@ -12,6 +12,8 @@ import { TableFiltersContainer } from '@/styles/Settings';
 import { PageTitle } from '@/components/Typography';
 import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
 import { SelectInput } from '@/components/Inputs/Select';
+import { loadCategories } from '@/redux/slices/categoriesSlice';
+import { useDispatch } from 'react-redux';
 
 const header: ITableHeader = [
   {
@@ -37,8 +39,15 @@ const header: ITableHeader = [
 
 const Transactions: NextPage = () => {
   const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
+  const dispatch = useDispatch();
 
   const { data, isLoading, error } = trpc.useQuery(['getTransactions'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const categories = trpc.useQuery(['getCategories'], {
     refetchInterval: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -49,6 +58,12 @@ const Transactions: NextPage = () => {
       formatData(data);
     }
   }, [data, isLoading]);
+
+  useEffect(() => {
+    if (categories.data !== undefined && categories.isSuccess) {
+      dispatch(loadCategories(categories.data));
+    }
+  }, [categories.data, categories.isSuccess]);
 
   function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
     finalObject.sort((a, b) => {

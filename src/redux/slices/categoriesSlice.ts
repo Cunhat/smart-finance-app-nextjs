@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ICategory } from '../../models/Interfaces';
-import { apolloClient } from '../../api/client';
-import { getAllCategories } from '../../api/queries';
+import { ICategory } from '@/models/Interfaces';
+
 
 type CategoriesInitialState = {
   categories: ICategory[];

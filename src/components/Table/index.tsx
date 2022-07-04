@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
-import { ITableHeader, ITableData, ITableRowItem } from '../../models/TableInterfaces/interfaces';
+import { ITableHeader, ITableRowItem } from '../../models/TableInterfaces/interfaces';
 
 import { TableRowItem } from './TableRowItem';
 
