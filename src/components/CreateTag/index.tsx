@@ -39,7 +39,7 @@ export const CreateTag: React.FC<CreateTagProps> = (props) => {
       </div>
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-        <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
+        <Button secondaryAction onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
         <Button disabled={tagName.length === 0} onClick={() => createTag.mutate({ name: tagName })} title='Confirm' />
       </div>
     </Modal>

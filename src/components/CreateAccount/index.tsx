@@ -57,7 +57,7 @@ export const CreateAccount: React.FC<CreateAccountProps> = (props) => {
       </div>
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-        <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
+        <Button secondaryAction onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
         <Button
           disabled={accountName.length === 0 || accountType.length === 0}
           onClick={() => createCategory.mutate({ name: accountName, type: accountType })}

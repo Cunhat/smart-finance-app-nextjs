@@ -39,7 +39,7 @@ export const CreateCategory: React.FC<CreateCategoryProps> = (props) => {
       </div>
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-        <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
+        <Button secondaryAction onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
         <Button disabled={categoryName.length === 0} onClick={() => createCategory.mutate({ name: categoryName })} title='Confirm' />
       </div>
     </Modal>

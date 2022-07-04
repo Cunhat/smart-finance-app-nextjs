@@ -11,11 +11,20 @@ type ButtonProps = {
   leftIcon?: IconDefinition;
   rightIcon?: IconDefinition;
   disabled?: boolean;
+  primaryAction?: boolean;
+  secondaryAction?: boolean;
 };
 
 export const Button: React.FC<ButtonProps> = (props) => {
   return (
-    <ButtonContainer disabled={props.disabled} color={props.color} textColor={props.textColor} onClick={props.onClick}>
+    <ButtonContainer
+      primaryAction={props.primaryAction}
+      secondaryAction={props.secondaryAction}
+      disabled={props.disabled}
+      color={props.color}
+      textColor={props.textColor}
+      onClick={props.onClick}
+    >
       {props.leftIcon && <FontAwesomeIcon icon={props.leftIcon} />}
       {props.title}
       {props.rightIcon && <FontAwesomeIcon icon={props.rightIcon} />}

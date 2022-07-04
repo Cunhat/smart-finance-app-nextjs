@@ -41,7 +41,7 @@ export const CreateSubCategory: React.FC<CreateSubCategoryProps> = (props) => {
       </div>
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
-        <Button onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
+        <Button secondaryAction onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
         <Button
           disabled={subCategoryName.length === 0}
           onClick={() => createSubCategory.mutate({ name: subCategoryName, id_category: props.categoryId })}
