@@ -1,28 +1,45 @@
-import { Calendar } from 'primereact/calendar';
+
 import styled from 'styled-components';
 
-export const StyledCalendar = styled.div`
+type CalendarProps = {
+  fontSize?: string;
+};
+
+
+export const StyledCalendar = styled.div<CalendarProps>`
+  width: 100%;
+  height: 40px;
+
   .p-calendar {
-    height: 25px;
-    :hover {
-      cursor: pointer;
-    }
+    width: 100%;
+    height: 40px;
+
+   
   }
 
   .p-inputtext {
-    border: 1px solid #000;
-    color: #000;
-    font-size: 14px;
-    font-family: "Smart Finance Regular";
-
-    :hover {
-      border: 1px solid ${props => props.theme.colors.primary[500]};
-    }
+    border-radius: 5px;
+    font-family: 'Smart Finance Regular';
+    font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')};
+    border-width: 1px;
+    padding-left: 10px;
+    outline: none !important;
+    border: 1px solid ${(props) => (props.theme.colors.secondary[500])};
 
     :focus {
-      outline: none;
-      border: 2px solid ${props => props.theme.colors.primary[500]};
-      box-shadow: 0 0 10px ${props => props.theme.colors.primary[300]};
+      outline: none !important;
+      border: 1px solid ${(props) =>  (props.theme.colors.primary[500])} !important;
+      border-color: ${(props) => (props.theme.colors.primary[500])} !important;
+      box-shadow: none !important;
     }
+
+    :hover {
+      border: 1px solid;
+      border-color: ${(props) => (props.theme.colors.primary[500]) } !important;
+    }
+  }
+  .p-datepicker-prev
+  .p-datepicker-next {
+    color: #999;
   }
 `;

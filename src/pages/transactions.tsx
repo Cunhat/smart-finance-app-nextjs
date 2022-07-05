@@ -14,6 +14,7 @@ import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
 import { SelectInput } from '@/components/Inputs/Select';
 import { loadCategories } from '@/redux/slices/categoriesSlice';
 import { useDispatch } from 'react-redux';
+import { CreateTransaction } from '@/components/CreateTransaction';
 
 const header: ITableHeader = [
   {
@@ -39,6 +40,7 @@ const header: ITableHeader = [
 
 const Transactions: NextPage = () => {
   const [tableData, setTableData] = React.useState<Array<ITableRowItem>>([]);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const dispatch = useDispatch();
 
   const { data, isLoading, error } = trpc.useQuery(['getTransactions'], {
@@ -125,10 +127,11 @@ const Transactions: NextPage = () => {
 
   return (
     <PageLayout>
+      <CreateTransaction openModal={setIsOpen} isOpen={isOpen}/>
       <PageTitle title='Transactions' />
       <TableFiltersContainer>
         <BasicTextInput value='' placeholder='Search transaction...' onChange={() => {}} width='200px' />
-        <Button onClick={() => {}} title='' leftIcon={faPlus} />
+        <Button onClick={() => setIsOpen(true)} title='Transaction' leftIcon={faPlus} />
       </TableFiltersContainer>
 
       {!isLoading && <Table header={header} tableData={tableData} />}
