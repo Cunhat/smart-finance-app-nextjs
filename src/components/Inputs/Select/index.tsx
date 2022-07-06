@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 type SelectInputProps = {
   data: Array<string>;
   defaultValue: string;
+  onValueChange: (e) => void;
 };
 
 export function SelectInput(props: SelectInputProps) {
   return (
     <>
-      <Select.Root defaultValue={props.defaultValue.toLocaleLowerCase()}>
+      <Select.Root defaultValue={props.defaultValue.toLocaleLowerCase()} onValueChange={props.onValueChange}>
         <SelectTrigger>
           <Select.Value />
           <Select.Icon>
