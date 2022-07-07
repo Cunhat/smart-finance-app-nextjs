@@ -1,14 +1,18 @@
 import { configureStore, applyMiddleware } from '@reduxjs/toolkit';
-import { categoriesSlice } from './slices/categoriesSlice';
+import { generalInfoSlice } from './slices/categoriesSlice';
 import thunk from 'redux-thunk';
 
 
 export const store = configureStore(
   {
     reducer: {
-      categories: categoriesSlice.reducer,
+      generalInfo: generalInfoSlice.reducer,
     },
   },
   applyMiddleware(thunk),
 );
+
+declare global {
+  type RootState = ReturnType<typeof store.getState>
+}
 

@@ -1,33 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ICategory } from '@/models/Interfaces';
+import { ICategory, ITag } from '@/models/Interfaces';
 
-
-type CategoriesInitialState = {
+export type GeneralInfoInitialState = {
   categories: ICategory[];
+  tags: ITag[];
 };
 
-const initialState: CategoriesInitialState = {
+const initialState: GeneralInfoInitialState = {
   categories: [],
+  tags: [],
 };
 
-export const categoriesSlice = createSlice({
-  name: 'categories',
+export const generalInfoSlice = createSlice({
+  name: 'generalInfo',
   initialState,
   reducers: {
     setCategories: (state, action) => {
       state.categories = action.payload;
     },
+    setTags: (state, action) => {
+      state.tags = action.payload;
+    },
   },
 });
 
-export const setCategory = (categories: ICategory[]) => async (dispatch, getState) => {
-  const newCategory = ['huahuah', 'rsrsrsrsrs'];
-
-  dispatch(setCategories(newCategory));
+export const saveTags = (tags: ITag[]) => async (dispatch, getState) => {
+  dispatch(setTags(tags));
 };
 
 export const loadCategories = (categories: ICategory[]) => async (dispatch, getState) => {
   dispatch(setCategories(categories));
 };
 
-export const { setCategories } = categoriesSlice.actions;
+export const { setCategories, setTags } = generalInfoSlice.actions;

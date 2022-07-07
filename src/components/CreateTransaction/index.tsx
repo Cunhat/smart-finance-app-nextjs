@@ -6,30 +6,37 @@ import { Text } from '../Typography';
 import { trpc } from '@/utils/trpc';
 import { CalendarInput } from '@/components/Inputs/Calendar';
 import { SelectInput } from '@/components/Inputs/Select';
-import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 type CreateTransactionProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
 };
 
+type DropdownCategories = { label: string; values: Array<string> };
+
 const Item: React.FC = (props) => {
   return <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '5px' }}>{props.children}</div>;
 };
 
 let initialState = {
-  tagName: 'Teste',
   value: 0,
   date: undefined,
   description: '',
+  categories: [] as Array<DropdownCategories>,
+  tags: [] as Array<string>,
+  tagName: '',
+  category: '',
 };
 
 type ACTIONTYPE =
   | { type: 'setDescription'; payload: string }
   | { type: 'setDate'; payload: Date }
   | { type: 'setValue'; payload: number }
-  | { type: 'setTag'; payload: string }
+  | { type: 'setTagName'; payload: string }
   | { type: 'setCategory'; payload: string }
+  | { type: 'setCategories'; payload: Array<DropdownCategories> }
+  | { type: 'setTags'; payload: Array<string> }
   | { type: 'clear' };
 
 function reducer(state: typeof initialState, action: ACTIONTYPE) {
@@ -40,10 +47,14 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
       return { ...state, date: action.payload.toString() };
     case 'setValue':
       return { ...state, value: action.payload };
-    case 'setTag':
+    case 'setTagName':
       return { ...state, tagName: action.payload };
     case 'setCategory':
       return { ...state, category: action.payload };
+    case 'setCategories':
+      return { ...state, categories: action.payload };
+    case 'setTags':
+      return { ...state, tags: action.payload };
     case 'clear':
       return initialState;
     default:
@@ -55,9 +66,10 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   const createTag = trpc.useMutation(['createTag']);
   const utils = trpc.useContext();
   let [state, dispatch] = useReducer(reducer, initialState);
+  const { categories, tags } = useSelector((state: RootState) => state.generalInfo);
 
   function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: type, payload: type === 'setTag' ? e : e.target.value });
+    dispatch({ type: type, payload: type === 'setTagName' || type === 'setCategory' ? e : e.target.value });
   }
 
   function cancelAndCloseModal() {
@@ -65,15 +77,40 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     props.openModal(false);
   }
 
+  // React.useEffect(() => {
+  //   if (createTag.isSuccess) {
+  //     cancelAndCloseModal();
+  //     utils.refetchQueries(['getTags']);
+  //   }
+  // }, [createTag.isSuccess]);
+
   React.useEffect(() => {
-    if (createTag.isSuccess) {
-      cancelAndCloseModal();
-      utils.refetchQueries(['getTags']);
+    if (categories !== undefined) {
+      let valueToDrop: Array<DropdownCategories> = [];
+      categories.forEach((category) => {
+        let aux: DropdownCategories = { label: category.name, values: [] };
+        category.subCategories.forEach((subCategory) => {
+          aux.values.push(subCategory.name);
+        });
+        valueToDrop.push(aux);
+      });
+      dispatch({ type: 'setCategories', payload: valueToDrop });
     }
-  }, [createTag.isSuccess]);
+  }, [categories]);
+
+  React.useEffect(() => {
+    if (tags !== undefined) {
+      let finalTags: Array<string> = [];
+      tags.forEach((tag) => {
+        finalTags.push(tag.name);
+      });
+      console.log('Tags', finalTags);
+      dispatch({ type: 'setTags', payload: finalTags });
+    }
+  }, [tags]);
 
   return (
-    <Modal id='tags' open={props.isOpen}>
+    <Modal id='createTransaction' open={props.isOpen}>
       <Text text='Create new Transaction' />
       <div
         style={{ width: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '15px' }}
@@ -93,11 +130,15 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
         </Item>
         <Item>
           <Text text='Category' fontSize='16px' />
-          <BasicTextInput value={state.category} placeholder='Category...' height='40px' onChange={(e) => handleChange('setCategory', e)} />
+          <SelectInput
+            data={state.categories}
+            defaultValue={state?.categories[0]?.values[0]}
+            onValueChange={(e) => handleChange('setCategory', e)}
+          />
         </Item>
         <Item>
           <Text text='Tag' fontSize='16px' />
-          <SelectInput data={['Teste', 'Teste 2']} defaultValue={state.tagName} onValueChange={(e) => handleChange('setTag', e)} />
+          <SelectInput data={state.tags} defaultValue={state.tags[0]} onValueChange={(e) => handleChange('setTagName', e)} />
         </Item>
         <Item>
           <Text text='Value' fontSize='16px' />

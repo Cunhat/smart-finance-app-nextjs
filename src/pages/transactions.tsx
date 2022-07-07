@@ -12,7 +12,7 @@ import { TableFiltersContainer } from '@/styles/Settings';
 import { PageTitle } from '@/components/Typography';
 import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
 import { SelectInput } from '@/components/Inputs/Select';
-import { loadCategories } from '@/redux/slices/categoriesSlice';
+import { loadCategories, saveTags } from '@/redux/slices/categoriesSlice';
 import { useDispatch } from 'react-redux';
 import { CreateTransaction } from '@/components/CreateTransaction';
 
@@ -55,6 +55,12 @@ const Transactions: NextPage = () => {
     refetchOnWindowFocus: false,
   });
 
+  const tags = trpc.useQuery(['getTags'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   useEffect(() => {
     if (data !== undefined && !isLoading) {
       formatData(data);
@@ -66,6 +72,12 @@ const Transactions: NextPage = () => {
       dispatch(loadCategories(categories.data));
     }
   }, [categories.data, categories.isSuccess]);
+
+  useEffect(() => {
+    if (tags.data !== undefined && tags.isSuccess) {
+      dispatch(saveTags(tags.data));
+    }
+  }, [tags.data, tags.isSuccess]);
 
   function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
     finalObject.sort((a, b) => {
