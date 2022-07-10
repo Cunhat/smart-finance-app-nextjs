@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectContent, SelectTrigger, SelectItem, SelectItemText } from './styles';
+import { SelectContent, SelectTrigger, SelectItem, SelectItemText, SelectLabel } from './styles';
 import * as Select from '@radix-ui/react-select';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +27,7 @@ export function SelectInput(props: SelectInputProps) {
               if (typeof item === 'object') {
                 return (
                   <>
-                    <Select.Label>{item.label}</Select.Label>
+                    <SelectLabel>{item.label}</SelectLabel>
                     {item.values.map((subItem, index) => {
                       return (
                         <SelectItem key={subItem + index} value={subItem.toLocaleLowerCase()}>

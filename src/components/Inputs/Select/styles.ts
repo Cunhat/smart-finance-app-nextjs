@@ -50,3 +50,10 @@ export const SelectItemText = styled(Select.ItemText)`
   font-family: 'Smart Finance Regular';
   font-size: '14px';
 `;
+
+export const SelectLabel = styled(Select.Label)`
+  font-family: 'Smart Finance Regular';
+  font-size: '14px';
+  color: #999;
+  padding-left: 5px;
+`;
