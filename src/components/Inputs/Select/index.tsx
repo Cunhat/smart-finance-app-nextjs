@@ -11,13 +11,12 @@ type SelectInputProps = {
 };
 
 export function SelectInput(props: SelectInputProps) {
-  console.log(props.data)
   return (
     <Select.Root defaultValue={props?.defaultValue?.toLocaleLowerCase()} onValueChange={props.onValueChange}>
       <SelectTrigger>
         <Select.Value />
         <Select.Icon>
-          <FontAwesomeIcon style={{ width: '15px', height: '15px' }} icon={faCaretDown} />
+          <FontAwesomeIcon key={Math.floor(Math.random() * 81000)} style={{ width: '15px', height: '15px' }} icon={faCaretDown} />
         </Select.Icon>
       </SelectTrigger>
       <SelectContent>
@@ -27,11 +26,11 @@ export function SelectInput(props: SelectInputProps) {
               if (typeof item === 'object') {
                 return (
                   <>
-                    <SelectLabel>{item.label}</SelectLabel>
+                    <SelectLabel key={item.label + index}>{item.label}</SelectLabel>
                     {item.values.map((subItem, index) => {
                       return (
-                        <SelectItem key={subItem + index} value={subItem.toLocaleLowerCase()}>
-                          <SelectItemText>{subItem}</SelectItemText>
+                        <SelectItem key={subItem} value={subItem.toLocaleLowerCase()}>
+                          <SelectItemText key={subItem + index}>{subItem}</SelectItemText>
                         </SelectItem>
                       );
                     })}

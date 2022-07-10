@@ -68,22 +68,6 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   let [state, dispatch] = useReducer(reducer, initialState);
   const { categories, tags } = useSelector((state: RootState) => state.generalInfo);
 
-  function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>) {
-    dispatch({ type: type, payload: type === 'setTagName' || type === 'setCategory' ? e : e.target.value });
-  }
-
-  function cancelAndCloseModal() {
-    dispatch({ type: 'clear' });
-    props.openModal(false);
-  }
-
-  // React.useEffect(() => {
-  //   if (createTag.isSuccess) {
-  //     cancelAndCloseModal();
-  //     utils.refetchQueries(['getTags']);
-  //   }
-  // }, [createTag.isSuccess]);
-
   React.useEffect(() => {
     if (categories !== undefined) {
       let valueToDrop: Array<DropdownCategories> = [];
@@ -104,10 +88,54 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
       tags.forEach((tag) => {
         finalTags.push(tag.name);
       });
-      console.log('Tags', finalTags);
+
       dispatch({ type: 'setTags', payload: finalTags });
     }
   }, [tags]);
+
+  // React.useEffect(() => {
+  //   if (createTag.isSuccess) {
+  //     cancelAndCloseModal();
+  //     utils.refetchQueries(['getTags']);
+  //   }
+  // }, [createTag.isSuccess]);
+
+  function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>): void {
+    dispatch({ type: type, payload: type === 'setTagName' || type === 'setCategory' ? e : e.target.value });
+  }
+
+  function cancelAndCloseModal(): void {
+    dispatch({ type: 'clear' });
+    props.openModal(false);
+  }
+
+  const handleSaveTransaction = (): void => {
+    let transaction: any = {};
+    transaction.description = state.description;
+    transaction.value = state.value;
+    transaction.date = state.date;
+    
+    categories.forEach((elem) => {
+      return elem.subCategories.find((subElem) => {
+        if (subElem.name.toLocaleLowerCase() === state.category) {
+          transaction.id_subCategory = subElem.id;
+        }
+      });
+    });
+    transaction.id_tag = tags.find(elem => elem.name.toLocaleLowerCase() === state.tagName.toLocaleLowerCase())!.id;
+    console.log(transaction)
+    cancelAndCloseModal();
+  };
+
+  const checkIfCanMutate = (): boolean => {
+    return !(
+      state.description.length > 0 &&
+      state.value > 0 &&
+      state.date !== undefined &&
+      state.category.length > 0 &&
+      state.tagName.length > 0
+    );
+  };
 
   return (
     <Modal id='createTransaction' open={props.isOpen}>
@@ -117,7 +145,11 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
       >
         <Item>
           <Text text='Date' fontSize='16px' />
-          <CalendarInput dateFormat={'dd/mm/yy'} value={state.date} onChange={(e) => handleChange('setDate', e)} />
+          <CalendarInput
+            dateFormat={'dd/mm/yy'}
+            value={state.date}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('setDate', e)}
+          />
         </Item>
         <Item>
           <Text text='Description' fontSize='16px' />
@@ -125,7 +157,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
             value={state.description}
             placeholder='Description...'
             height='40px'
-            onChange={(e) => handleChange('setDescription', e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('setDescription', e)}
           />
         </Item>
         <Item>
@@ -148,7 +180,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
 
       <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
         <Button secondaryAction onClick={() => cancelAndCloseModal()} title='Cancel' color='red' />
-        <Button disabled={[].length === 0} onClick={() => createTag.mutate({ name: 'tagName' })} title='Confirm' />
+        <Button disabled={checkIfCanMutate()} onClick={handleSaveTransaction} title='Confirm' />
       </div>
     </Modal>
   );

@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyledCalendar} from './styles';
+import { StyledCalendar } from './styles';
 import { Calendar } from 'primereact/calendar';
 import 'primeicons/primeicons.css';
 
 type CalendarInputProps = {
   dateFormat: string;
   date: Date;
-  onChange: () => void;
-}
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
 export function CalendarInput(props: CalendarInputProps) {
   return (

@@ -7,7 +7,7 @@ type BasicTextInputProps = {
   value: string;
   width?: string;
   height?: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   fontSize?: string;
   isInvalid?: boolean;
