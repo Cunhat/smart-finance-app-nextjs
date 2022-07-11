@@ -25,8 +25,8 @@ let initialState = {
   description: '',
   categories: [] as Array<DropdownCategories>,
   tags: [] as Array<string>,
-  tagName: '',
-  category: '',
+  tagName: null,
+  category: null,
 };
 
 type ACTIONTYPE =
@@ -101,7 +101,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   }, [createTransaction.isSuccess]);
 
   function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>): void {
-    dispatch({ type: type, payload: type === 'setTagName' || type === 'setCategory' ? e : e.target.value });
+    dispatch({ type: type, payload: e.target.value });
   }
 
   function cancelAndCloseModal(): void {
@@ -116,16 +116,9 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     transaction.date = state.date.toDateString();
     transaction.id_account = 'd7222618-c011-42c7-9343-7abef26f33df';
     transaction.id_user = 'user';
-
-    categories.forEach((elem) => {
-      return elem.subCategories.find((subElem) => {
-        if (subElem.name.toLocaleLowerCase() === state.category) {
-          transaction.id_subCategory = subElem.id;
-        }
-      });
-    });
-    transaction.id_tag = tags.find((elem) => elem.name.toLocaleLowerCase() === state.tagName.toLocaleLowerCase())!.id;
-    console.log(transaction);
+    transaction.id_subCategory = state.category.id;
+    transaction.id_tag = state.tagName.id;
+    
     createTransaction.mutate(transaction);
     cancelAndCloseModal();
   };
@@ -135,8 +128,8 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
       state.description.length > 0 &&
       state.value > 0 &&
       state.date !== undefined &&
-      state.category.length > 0 &&
-      state.tagName.length > 0
+      state.category !== undefined &&
+      state.tagName !== undefined
     );
   };
 
@@ -166,14 +159,26 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
         <Item>
           <Text text='Category' fontSize='16px' />
           <SelectInput
-            data={state.categories}
-            defaultValue={state?.categories[0]?.values[0]}
+            data={categories}
+            defaultValue={state.category}
             onValueChange={(e) => handleChange('setCategory', e)}
+            height='40px'
+            placeholder='Select a category'
+            optionLabel='name'
+            optionGroupLabel='name'
+            optionGroupChildren='subCategories'
           />
         </Item>
         <Item>
           <Text text='Tag' fontSize='16px' />
-          <SelectInput data={state.tags} defaultValue={state.tags[0]} onValueChange={(e) => handleChange('setTagName', e)} />
+          <SelectInput
+            data={tags}
+            defaultValue={state.tagName}
+            onValueChange={(e) => handleChange('setTagName', e)}
+            placeholder='Select a tag'
+            height='40px'
+            optionLabel='name'
+          />
         </Item>
         <Item>
           <Text text='Value' fontSize='16px' />

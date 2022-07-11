@@ -14,6 +14,7 @@ export const InputTextContainer = styled(InputText)<InputTextProps>`
   width: ${(props) => (props.width ? props.width : '100%')};
   font-family: 'Smart Finance Regular';
   font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')};
+  border-width: 1px;
   padding-left: 10px;
   outline: none !important;
   border: 1px solid ${(props) => (props.isInvalid ? 'red' : props.theme.colors.secondary[500])};

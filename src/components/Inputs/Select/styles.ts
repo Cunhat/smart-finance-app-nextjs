@@ -1,59 +1,46 @@
 import styled from 'styled-components';
-import * as Select from '@radix-ui/react-select';
+import { Dropdown } from 'primereact/dropdown';
 
+type InputTextProps = {
+  width?: string;
+  height?: string;
+  fontSize?: string;
+};
 
-export const SelectContent = styled(Select.Content)`
-  background-color: white;
-  border-radius: 6px;
-  box-shadow: ${(props) => props.theme.shadows.general};
-  padding: 5px;
-
-  :hover {
-    cursor: pointer;
-  }
-`;
-
-export const SelectTrigger = styled(Select.SelectTrigger)`
-  all: unset;
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 4px;
-  padding: 0 10px;
-  font-size: 14px;
-  font-family: 'Smart Finance Regular';
-  line-height: 1px;
-  height: 40px;
-  gap: 5px;
-  background-color: white;
-  color: #000;
-  border: 1px solid #000;
-
-  :hover {
-    border: 1px solid ${(props) => props.theme.colors.primary[500]};
-  }
-
-  :focus {
-    border: 1px solid ${(props) => props.theme.colors.primary[500]};
-  }
-`;
-
-export const SelectItem = styled(Select.Item)`
-  padding: 10px;
+export const SelectContainer = styled(Dropdown)<InputTextProps>`
+  border-radius: 5px;
+  height: ${(props) => (props.height ? props.height : '25px')};
+  width: ${(props) => (props.width ? props.width : '100%')};
   outline: none !important;
-  :hover {
-    color: ${(props) => props.theme.colors.primary[500]};
+  border: 1px solid ${(props) => props.theme.colors.secondary[500]};
+  align-items: center;
+
+  .p-dropdown-label {
+    font-family: 'Smart Finance Regular';
+    font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')};
   }
-`;
 
-export const SelectItemText = styled(Select.ItemText)`
-  font-family: 'Smart Finance Regular';
-  font-size: '14px';
-`;
+  .p-dropdown-open {
+    outline: none !important;
+    border: 1px solid ${(props) => props.theme.colors.primary[500]} !important;
+    border-color: ${(props) => props.theme.colors.primary[500]} !important;
+    box-shadow: none !important;
+  }
 
-export const SelectLabel = styled(Select.Label)`
-  font-family: 'Smart Finance Regular';
-  font-size: '14px';
-  color: #999;
-  padding-left: 5px;
+  :not(.p-disabled).p-focus {
+    outline: none !important;
+    border: 1px solid ${(props) => props.theme.colors.primary[500]} !important;
+    border-color: ${(props) => props.theme.colors.primary[500]} !important;
+    box-shadow: none !important;
+  }
+
+  .p-dropdown-items {
+    font-family: 'Smart Finance Regular' !important;
+    font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')} !important;
+  }
+
+  :hover {
+    border: 1px solid;
+    border-color: ${(props) => props.theme.colors.primary[500]} !important;
+  }
 `;
