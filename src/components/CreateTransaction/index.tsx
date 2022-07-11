@@ -7,6 +7,7 @@ import { trpc } from '@/utils/trpc';
 import { CalendarInput } from '@/components/Inputs/Calendar';
 import { SelectInput } from '@/components/Inputs/Select';
 import { useSelector } from 'react-redux';
+import { CurrencyInput } from '@/components/Inputs/CurrencyInput';
 
 type CreateTransactionProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +21,7 @@ const Item: React.FC = (props) => {
 };
 
 let initialState = {
-  value: 0 as number,
+  value: undefined as number | undefined,
   date: new Date(),
   description: '',
   categories: [] as Array<DropdownCategories>,
@@ -118,7 +119,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     transaction.id_user = 'user';
     transaction.id_subCategory = state.category.id;
     transaction.id_tag = state.tagName.id;
-    
+
     createTransaction.mutate(transaction);
     cancelAndCloseModal();
   };
@@ -182,7 +183,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
         </Item>
         <Item>
           <Text text='Value' fontSize='16px' />
-          <BasicTextInput value={state.value} placeholder='Value...' height='40px' onChange={(e) => handleChange('setValue', e)} />
+          <CurrencyInput value={state.value} placeholder='Value...' height='40px' onChange={(e) => handleChange('setValue', e)} />
         </Item>
       </div>
 
