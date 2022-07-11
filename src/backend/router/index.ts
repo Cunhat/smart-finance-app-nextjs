@@ -100,6 +100,30 @@ export const appRouter = trpc
         },
       });
     },
+  })
+  .mutation('createTransaction', {
+    input: z.object({
+      description: z.string(),
+      date: z.string(),
+      value: z.number(),
+      id_subCategory: z.string(),
+      id_account: z.string(),
+      id_user: z.string(),
+      id_tag: z.string(),
+    }),
+    async resolve({ input }) {
+      return await prisma.transaction.create({
+        data: {
+          description: input.description,
+          date: new Date(input.date),
+          value: input.value,
+          id_subCategory: input.id_subCategory,
+          id_account: input.id_account,
+          id_user: userId,
+          id_tag: input.id_tag,
+        },
+      });
+    },
   });
 
 // export type definition of API

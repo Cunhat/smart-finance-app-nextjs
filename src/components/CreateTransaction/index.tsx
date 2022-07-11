@@ -20,8 +20,8 @@ const Item: React.FC = (props) => {
 };
 
 let initialState = {
-  value: 0,
-  date: undefined,
+  value: 0 as number,
+  date: new Date(),
   description: '',
   categories: [] as Array<DropdownCategories>,
   tags: [] as Array<string>,
@@ -32,7 +32,7 @@ let initialState = {
 type ACTIONTYPE =
   | { type: 'setDescription'; payload: string }
   | { type: 'setDate'; payload: Date }
-  | { type: 'setValue'; payload: number }
+  | { type: 'setValue'; payload: string }
   | { type: 'setTagName'; payload: string }
   | { type: 'setCategory'; payload: string }
   | { type: 'setCategories'; payload: Array<DropdownCategories> }
@@ -44,7 +44,7 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
     case 'setDescription':
       return { ...state, description: action.payload };
     case 'setDate':
-      return { ...state, date: action.payload.toString() };
+      return { ...state, date: action.payload };
     case 'setValue':
       return { ...state, value: action.payload };
     case 'setTagName':
@@ -63,7 +63,7 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
 }
 
 export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
-  const createTag = trpc.useMutation(['createTag']);
+  const createTransaction = trpc.useMutation(['createTransaction']);
   const utils = trpc.useContext();
   let [state, dispatch] = useReducer(reducer, initialState);
   const { categories, tags } = useSelector((state: RootState) => state.generalInfo);
@@ -93,12 +93,12 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     }
   }, [tags]);
 
-  // React.useEffect(() => {
-  //   if (createTag.isSuccess) {
-  //     cancelAndCloseModal();
-  //     utils.refetchQueries(['getTags']);
-  //   }
-  // }, [createTag.isSuccess]);
+  React.useEffect(() => {
+    if (createTransaction.isSuccess) {
+      cancelAndCloseModal();
+      utils.refetchQueries(['getTransactions']);
+    }
+  }, [createTransaction.isSuccess]);
 
   function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>): void {
     dispatch({ type: type, payload: type === 'setTagName' || type === 'setCategory' ? e : e.target.value });
@@ -112,9 +112,11 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   const handleSaveTransaction = (): void => {
     let transaction: any = {};
     transaction.description = state.description;
-    transaction.value = state.value;
-    transaction.date = state.date;
-    
+    transaction.value = parseInt(state.value);
+    transaction.date = state.date.toDateString();
+    transaction.id_account = 'd7222618-c011-42c7-9343-7abef26f33df';
+    transaction.id_user = 'user';
+
     categories.forEach((elem) => {
       return elem.subCategories.find((subElem) => {
         if (subElem.name.toLocaleLowerCase() === state.category) {
@@ -122,8 +124,9 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
         }
       });
     });
-    transaction.id_tag = tags.find(elem => elem.name.toLocaleLowerCase() === state.tagName.toLocaleLowerCase())!.id;
-    console.log(transaction)
+    transaction.id_tag = tags.find((elem) => elem.name.toLocaleLowerCase() === state.tagName.toLocaleLowerCase())!.id;
+    console.log(transaction);
+    createTransaction.mutate(transaction);
     cancelAndCloseModal();
   };
 
@@ -147,7 +150,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
           <Text text='Date' fontSize='16px' />
           <CalendarInput
             dateFormat={'dd/mm/yy'}
-            value={state.date}
+            date={state.date}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('setDate', e)}
           />
         </Item>
