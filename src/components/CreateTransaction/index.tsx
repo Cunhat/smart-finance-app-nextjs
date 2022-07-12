@@ -8,6 +8,7 @@ import { CalendarInput } from '@/components/Inputs/Calendar';
 import { SelectInput } from '@/components/Inputs/Select';
 import { useSelector } from 'react-redux';
 import { CurrencyInput } from '@/components/Inputs/CurrencyInput';
+import { DropdownChangeParams } from 'primereact/dropdown';
 
 type CreateTransactionProps = {
   openModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,13 +22,13 @@ const Item: React.FC = (props) => {
 };
 
 let initialState = {
-  value: undefined as number | undefined,
+  value: undefined as string | undefined,
   date: new Date(),
-  description: '',
+  description: '' as string,
   categories: [] as Array<DropdownCategories>,
   tags: [] as Array<string>,
-  tagName: null,
-  category: null,
+  tagName: null as null | {},
+  category: null as null | {},
 };
 
 type ACTIONTYPE =
@@ -40,7 +41,7 @@ type ACTIONTYPE =
   | { type: 'setTags'; payload: Array<string> }
   | { type: 'clear' };
 
-function reducer(state: typeof initialState, action: ACTIONTYPE) {
+function reducer(state: typeof initialState, action: ACTIONTYPE): typeof initialState {
   switch (action.type) {
     case 'setDescription':
       return { ...state, description: action.payload };
@@ -101,7 +102,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     }
   }, [createTransaction.isSuccess]);
 
-  function handleChange(type: string, e: React.ChangeEvent<HTMLInputElement>): void {
+  function handleChange(type: string, e: DropdownChangeParams | React.ChangeEvent<HTMLInputElement>): void {
     dispatch({ type: type, payload: e.target.value });
   }
 
@@ -113,7 +114,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   const handleSaveTransaction = (): void => {
     let transaction: any = {};
     transaction.description = state.description;
-    transaction.value = parseInt(state.value);
+    transaction.value = parseInt(state.value!);
     transaction.date = state.date.toDateString();
     transaction.id_account = 'd7222618-c011-42c7-9343-7abef26f33df';
     transaction.id_user = 'user';
@@ -127,7 +128,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   const checkIfCanMutate = (): boolean => {
     return !(
       state.description.length > 0 &&
-      state.value > 0 &&
+      state.value !== undefined &&
       state.date !== undefined &&
       state.category !== undefined &&
       state.tagName !== undefined

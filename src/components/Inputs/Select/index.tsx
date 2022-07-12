@@ -1,10 +1,11 @@
 import React from 'react';
 import { SelectContainer } from './styles';
+import { DropdownChangeParams } from 'primereact/dropdown';
 
 type SelectInputProps = {
-  data: Array<string> | Array<{ label: string; values: Array<string> }>;
-  defaultValue: string;
-  onValueChange: (e) => void;
+  data: Array<{ label: string; values: Array<string> }>;
+  defaultValue: {} | null;
+  onValueChange: (e: DropdownChangeParams) => void;
   placeholder: string;
   width?: string;
   height?: string;
