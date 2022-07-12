@@ -12,7 +12,7 @@ type CalendarInputProps = {
 export function CalendarInput(props: CalendarInputProps) {
   return (
     <StyledCalendar>
-      <Calendar value={props.date} onChange={props.onChange} />
+      <Calendar dateFormat={props.dateFormat} value={props.date} onChange={props.onChange} />
     </StyledCalendar>
   );
 }
