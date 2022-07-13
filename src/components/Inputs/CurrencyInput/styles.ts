@@ -5,6 +5,7 @@ type InputTextProps = {
   width?: string;
   height?: string;
   fontSize?: string;
+  error?: boolean;
 };
 
 export const InputNumberContainer = styled(InputNumber)<InputTextProps>`
@@ -17,19 +18,17 @@ export const InputNumberContainer = styled(InputNumber)<InputTextProps>`
     border-width: 1px;
     padding-left: 10px;
     outline: none !important;
-    border: 1px solid ${(props) => props.theme.colors.secondary[500]};
+    border: 1px solid ${(props) => (props.error ? 'red' : props.theme.colors.secondary[500])};
     :focus {
       outline: none !important;
-      border: 1px solid ${(props) => props.theme.colors.primary[500]} !important;
-      border-color: ${(props) => props.theme.colors.primary[500]} !important;
+      border: 1px solid ${(props) => (props.error ? 'red' : props.theme.colors.secondary[500])} !important;
+      /* border-color: ${(props) => props.theme.colors.primary[500]} !important; */
       box-shadow: none !important;
-      //box-shadow: 0 0 10px #719ece;
-      //border-color: ${(props) => props.theme.colors.primary[500]};
     }
 
     :hover {
       border: 1px solid;
-      border-color: ${(props) => props.theme.colors.primary[500]} !important;
+      border-color: ${(props) => (props.error ? 'red' : props.theme.colors.secondary[500])} !important;
     }
   }
 `;

@@ -18,6 +18,7 @@ export interface ICategory {
 
 export interface ISubCategory {
   id: string;
+  id_category: string;
   name: string;
   category: ICategory;
 }
@@ -42,6 +43,7 @@ export interface ITransaction {
   subcategory: ISubCategory;
   account: IAccount;
   tag: ITag;
+  id: string;
 }
 
 export interface IGetAllCategoriesRequest {

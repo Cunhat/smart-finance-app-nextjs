@@ -1,8 +1,6 @@
 import React from 'react';
 import { InputTextContainer } from './styles';
 
- 
-
 type BasicTextInputProps = {
   value: string;
   width?: string;
@@ -10,7 +8,7 @@ type BasicTextInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   fontSize?: string;
-  isInvalid?: boolean;
+  error?: boolean;
 };
 
 export function BasicTextInput(props: BasicTextInputProps) {
@@ -22,7 +20,7 @@ export function BasicTextInput(props: BasicTextInputProps) {
       fontSize={props.fontSize}
       placeholder={props.placeholder}
       onChange={props.onChange}
-      isInvalid={props.isInvalid || false}
+      error={props.error || false}
     />
   );
 }

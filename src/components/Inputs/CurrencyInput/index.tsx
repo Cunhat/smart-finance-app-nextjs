@@ -9,6 +9,7 @@ type BasicTextInputProps = {
   onChange: (e: InputNumberValueChangeParams) => void;
   placeholder?: string;
   fontSize?: string;
+  error?: boolean;
 };
 
 export function CurrencyInput(props: BasicTextInputProps) {
@@ -24,6 +25,7 @@ export function CurrencyInput(props: BasicTextInputProps) {
       width={props.width}
       fontSize={props.fontSize}
       placeholder={props.placeholder}
+      error={props.error || false}
     />
   );
 }

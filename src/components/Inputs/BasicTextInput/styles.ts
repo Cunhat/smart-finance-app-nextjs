@@ -5,7 +5,7 @@ type InputTextProps = {
   width?: string;
   height?: string;
   fontSize?: string;
-  isInvalid: boolean;
+  error?: boolean;
 };
 
 export const InputTextContainer = styled(InputText)<InputTextProps>`
@@ -16,12 +16,12 @@ export const InputTextContainer = styled(InputText)<InputTextProps>`
   font-size: ${(props) => (props.fontSize ? props.fontSize : '14px')};
   padding-left: 10px;
   outline: none !important;
-  border: 1px solid ${(props) => (props.isInvalid ? 'red' : props.theme.colors.secondary[500])};
+  border: 1px solid ${(props) => (props.error ? 'red' : props.theme.colors.secondary[500])};
 
   :focus {
     outline: none !important;
-    border: 1px solid ${(props) => (props.isInvalid ? 'red' : props.theme.colors.primary[500])} !important;
-    border-color: ${(props) => (props.isInvalid ? 'red' : props.theme.colors.primary[500])} !important;
+    border: 1px solid ${(props) => (props.error ? 'red' : props.theme.colors.primary[500])} !important;
+    border-color: ${(props) => (props.error ? 'red' : props.theme.colors.primary[500])} !important;
     box-shadow: none !important;
     //box-shadow: 0 0 10px #719ece;
     //border-color: ${(props) => props.theme.colors.primary[500]};
@@ -29,10 +29,10 @@ export const InputTextContainer = styled(InputText)<InputTextProps>`
 
   :hover {
     border: 1px solid;
-    border-color: ${(props) => (props.isInvalid ? 'red !important' : props.theme.colors.primary[500])+ "!important"};
+    border-color: ${(props) => (props.error ? 'red' : props.theme.colors.primary[500])} !important;
   }
 
   ::placeholder {
-    color: ${(props) => (props.isInvalid ? 'red' : '')};
+    color: ${(props) => (props.error ? 'red' : '')};
   }
 `;

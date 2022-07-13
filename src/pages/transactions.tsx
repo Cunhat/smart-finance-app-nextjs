@@ -145,7 +145,6 @@ const Transactions: NextPage = () => {
         <BasicTextInput value='' placeholder='Search transaction...' onChange={() => {}} width='200px' />
         <Button onClick={() => setIsOpen(true)} title='Transaction' leftIcon={faPlus} />
       </TableFiltersContainer>
-
       {!isLoading && <Table header={header} tableData={tableData} />}
     </PageLayout>
   );
