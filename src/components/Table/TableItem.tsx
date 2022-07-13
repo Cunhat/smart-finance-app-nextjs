@@ -85,9 +85,7 @@ export function TableItem(props: TableItemProps) {
   };
 
   const getSelectedSubCategory = () => {
-    return categories
-      .find((c) => c.id === props.data.subcategory.id_category)!
-      .subCategories.find((c) => c.id === props.data.subcategory.id);
+    return categories.find((c) => c.id === state.category.id_category)!.subCategories.find((c) => c.id === state.category.id);
   };
 
   const checkIfCanMutate = () => {
