@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faCheck, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { SelectInput } from '../Inputs/Select';
 import { CalendarInput } from '../Inputs/Calendar';
@@ -30,6 +30,7 @@ export function TableItem(props: TableItemProps) {
     category: props.data.subcategory,
   });
   const updateTransactionMutation = trpc.useMutation(['updateTransaction']);
+  const deleteTransactionMutation = trpc.useMutation(['deleteTransaction']);
   const utils = trpc.useContext();
 
   const StyledTableRow = withStyles((theme) => ({
@@ -58,6 +59,12 @@ export function TableItem(props: TableItemProps) {
     }
   }, [updateTransactionMutation.isSuccess]);
 
+  React.useEffect(() => {
+    if (deleteTransactionMutation.isSuccess) {
+      utils.refetchQueries(['getTransactions']);
+    }
+  }, [deleteTransactionMutation.isSuccess]);
+
   const updateTransaction = () => {
     let transaction: any = {};
     transaction.id = props.data.id;
@@ -69,6 +76,11 @@ export function TableItem(props: TableItemProps) {
     transaction.id_subCategory = state.category!.id;
     transaction.id_tag = state.tagName!.id;
     updateTransactionMutation.mutate(transaction);
+    handleEdit();
+  };
+
+  const deleteTransaction = () => {
+    deleteTransactionMutation.mutate({ id: props.data.id });
     handleEdit();
   };
 
@@ -155,6 +167,7 @@ export function TableItem(props: TableItemProps) {
                   <FontAwesomeIcon icon={faCheck} style={{ width: '20px', height: '20px', color: 'green' }} onClick={updateTransaction} />
                 )}
                 <FontAwesomeIcon icon={faXmark} style={{ width: '20px', height: '20px', color: 'red' }} onClick={handleEdit} />
+                <FontAwesomeIcon icon={faTrashCan} style={{ width: '20px', height: '20px', color: '#999' }} onClick={deleteTransaction} />
               </EditActions>
             </StyledTableCell>
           </>

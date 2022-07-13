@@ -150,6 +150,18 @@ export const appRouter = trpc
         },
       });
     },
+  })
+  .mutation('deleteTransaction', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input }) {
+      return await prisma.transaction.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    },
   });
 
 // export type definition of API
