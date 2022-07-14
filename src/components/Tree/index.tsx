@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MainItemContainer, SecondaryItemContainer, EditActionsContainer } from './styles';
 import { Text } from '../Typography';
-import { faChevronRight, faPen, faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faPen, faCheck, faXmark, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BasicTextInput } from '../Inputs/BasicTextInput';
 import { IMainItem, ISecondaryItem } from '../../models/TreeInterfaces/interfaces';
@@ -15,6 +15,7 @@ type EditableSectionProps = {
   handleToggleEdition: () => void;
   isPrimary?: boolean;
   handlePrimaryCreation: (value: string) => void;
+  deleteHandler: (id: string) => void;
 };
 
 const EditableSection: React.FC<EditableSectionProps> = (props) => {
@@ -32,6 +33,7 @@ const EditableSection: React.FC<EditableSectionProps> = (props) => {
             style={{ width: '20px', height: '20px', color: 'red' }}
             onClick={props.handleToggleCancelEdition}
           />
+          <FontAwesomeIcon icon={faTrashCan} style={{ width: '20px', height: '20px', color: '#999' }} onClick={props.deleteHandler} />
         </>
       ) : (
         <>
@@ -127,6 +129,7 @@ function MainItem(props: MainItemProps): JSX.Element {
             handleToggleEdition={handleToggleEdit}
             handlePrimaryCreation={() => props.data.handlePrimaryCreation(props.data.id, props.data.name)}
             isPrimary
+            deleteHandler={() => props.data.deleteHandler(props.data.id)}
           />
         )}
       </MainItemContainer>

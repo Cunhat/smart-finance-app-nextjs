@@ -34,6 +34,8 @@ function CategoriesTags() {
   const updateCategoryMutation = trpc.useMutation(['updateCategory']);
   const updateSubCategoryMutation = trpc.useMutation(['updateSubCategory']);
 
+  const deleteCategory = trpc.useMutation(['deleteCategory']);
+
   const utils = trpc.useContext();
 
   const dispatch = useDispatch();
@@ -56,6 +58,7 @@ function CategoriesTags() {
           editableHandler: updateCategoryHandler,
           secondaryItems: [],
           handlePrimaryCreation: handlePrimaryCreation,
+          deleteHandler: deleteHandler,
         };
 
         const arrayOfSecondaryItems: Array<ISecondaryItem> = [];
@@ -89,12 +92,22 @@ function CategoriesTags() {
     }
   }, [updateSubCategoryMutation.isSuccess]);
 
+  useEffect(() => {
+    if (deleteCategory.isSuccess) {
+      utils.refetchQueries(['getCategories']);
+    }
+  }, [deleteCategory.isSuccess]);
+
   const updateCategoryHandler = (id: string, name: string) => {
     updateCategoryMutation.mutate({ id: id, name: name });
   };
 
   const editableHandler = (id: string, name: string) => {
     updateSubCategoryMutation.mutate({ id: id, name: name });
+  };
+
+  const deleteHandler = (id: string) => {
+    deleteCategory.mutate({ id: id });
   };
 
   const handlePrimaryCreation = (id: string, name: string) => {

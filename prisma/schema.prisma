@@ -2,6 +2,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
   referentialIntegrity = "prisma"
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -32,7 +33,7 @@ model SubCategory {
   id String @id @default(uuid()) 
   name String
   id_category String
-  category   Category @relation(fields: [id_category], references: [id])
+  category   Category @relation(fields: [id_category], references: [id], onDelete: Cascade)
   transactions Transaction[] 
   @@map("subcategory")
 }

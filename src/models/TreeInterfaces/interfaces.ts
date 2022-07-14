@@ -5,6 +5,7 @@ export interface IMainItem {
   editableHandler: (id: string, name: string) => void;
   secondaryItems: Array<ISecondaryItem>;
   handlePrimaryCreation: (categoryName: string, categoryId: string) => void;
+  deleteHandler: (id: string) => void;
 }
 
 export interface ISecondaryItem {
