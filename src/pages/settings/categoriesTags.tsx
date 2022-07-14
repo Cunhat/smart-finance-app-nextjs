@@ -31,6 +31,10 @@ function CategoriesTags() {
     refetchOnWindowFocus: false,
   });
 
+  const updateCategoryMutation = trpc.useMutation(['updateCategory']);
+
+  const utils = trpc.useContext();
+
   const dispatch = useDispatch();
   const [dataToDisplay, setDataToDisplay] = useState<IMainItem[]>([]);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -48,7 +52,7 @@ function CategoriesTags() {
           name: category.name,
           id: category.id,
           editable: true,
-          editableHandler: editableHandler,
+          editableHandler: updateCategoryHandler,
           secondaryItems: [],
           handlePrimaryCreation: handlePrimaryCreation,
         };
@@ -72,6 +76,16 @@ function CategoriesTags() {
     }
   }, [categories.data, categories.isLoading]);
 
+  useEffect(() => {
+    if (updateCategoryMutation.isSuccess) {
+      utils.refetchQueries(['getCategories']);
+    }
+  }, [updateCategoryMutation.isSuccess]);
+
+  const updateCategoryHandler = (id: string, name: string) => {
+    updateCategoryMutation.mutate({ id: id, name: name });
+  };
+
   const editableHandler = (id: string) => {
     console.log(id);
   };
@@ -92,7 +106,7 @@ function CategoriesTags() {
         <Button onClick={() => setModalOpen(!modalOpen)} title='Tag' leftIcon={faPlus} />
       </TitleSection>
       <LinearContainer>
-        <div style={{display: 'flex', gap: "10px", flexWrap: "wrap"}}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           {tags.isLoading ? (
             <div>Loading...</div>
           ) : (

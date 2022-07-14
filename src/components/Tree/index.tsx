@@ -47,19 +47,25 @@ type EditableSecondaryItemProps = ISecondaryItem;
 
 function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
   const [edit, setEdit] = useState<boolean>(false);
+  const [name, setName] = useState<string>(props.name);
 
   function handleToggleEdit(): void {
     setEdit(!edit);
   }
 
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debugger;
+    setName(e.target.value);
+  };
+
   function confirmHandler() {
-    props.editableHandler(props.id, props.name);
+    props.editableHandler(props.id, name);
     setEdit(false);
   }
 
   return (
     <SecondaryItemContainer>
-      {edit ? <BasicTextInput value={props.name} /> : <Text text={props.name} fontSize='18' />}
+      {edit ? <BasicTextInput value={name} onChange={changeHandler} /> : <Text text={props.name} fontSize='18' />}
       {props.editable && (
         <EditableSection
           canEdit={edit}
@@ -79,6 +85,7 @@ type MainItemProps = {
 function MainItem(props: MainItemProps): JSX.Element {
   const [open, setOpen] = useState<boolean>(false);
   const [edit, setEdit] = useState<boolean>(false);
+  const [name, setName] = useState<string>(props.data.name);
 
   function handleToggle(): void {
     setOpen(!open);
@@ -93,9 +100,13 @@ function MainItem(props: MainItemProps): JSX.Element {
   }
 
   function confirmHandler() {
-    props.data.editableHandler(props.data.id, props.data.name);
+    props.data.editableHandler(props.data.id, name);
     setEdit(false);
   }
+
+  const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
 
   return (
     <>
@@ -108,7 +119,7 @@ function MainItem(props: MainItemProps): JSX.Element {
             onClick={handleToggle}
           />
         )}
-        {edit ? <BasicTextInput value={props.data.name} /> : <Text text={props.data.name} fontSize='18' />}
+        {edit ? <BasicTextInput value={name} onChange={changeHandler} /> : <Text text={props.data.name} fontSize='18' />}
         {props.data.editable && (
           <EditableSection
             canEdit={edit}

@@ -162,6 +162,22 @@ export const appRouter = trpc
         },
       });
     },
+  })
+  .mutation('updateCategory', {
+    input: z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    async resolve({ input }) {
+      return await prisma.category.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+        },
+      });
+    },
   });
 
 // export type definition of API
