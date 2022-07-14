@@ -32,6 +32,7 @@ function CategoriesTags() {
   });
 
   const updateCategoryMutation = trpc.useMutation(['updateCategory']);
+  const updateSubCategoryMutation = trpc.useMutation(['updateSubCategory']);
 
   const utils = trpc.useContext();
 
@@ -82,12 +83,18 @@ function CategoriesTags() {
     }
   }, [updateCategoryMutation.isSuccess]);
 
+  useEffect(() => {
+    if (updateSubCategoryMutation.isSuccess) {
+      utils.refetchQueries(['getCategories']);
+    }
+  }, [updateSubCategoryMutation.isSuccess]);
+
   const updateCategoryHandler = (id: string, name: string) => {
     updateCategoryMutation.mutate({ id: id, name: name });
   };
 
-  const editableHandler = (id: string) => {
-    console.log(id);
+  const editableHandler = (id: string, name: string) => {
+    updateSubCategoryMutation.mutate({ id: id, name: name });
   };
 
   const handlePrimaryCreation = (id: string, name: string) => {

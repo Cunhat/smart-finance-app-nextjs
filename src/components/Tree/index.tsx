@@ -54,7 +54,6 @@ function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
   }
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debugger;
     setName(e.target.value);
   };
 
