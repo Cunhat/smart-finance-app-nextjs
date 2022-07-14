@@ -14,7 +14,7 @@ type EditableSectionProps = {
   handleToggleCancelEdition: () => void;
   handleToggleEdition: () => void;
   isPrimary?: boolean;
-  handlePrimaryCreation: (value: string) => void;
+  handlePrimaryCreation?: (value: string) => void;
   deleteHandler: (id: string) => void;
 };
 
@@ -73,6 +73,7 @@ function EditableSecondaryItem(props: EditableSecondaryItemProps): JSX.Element {
           handleToggleConfirmEdition={confirmHandler}
           handleToggleCancelEdition={confirmHandler}
           handleToggleEdition={handleToggleEdit}
+          deleteHandler={() => props.deleteHandler(props.id)}
         />
       )}
     </SecondaryItemContainer>

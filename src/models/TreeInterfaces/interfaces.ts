@@ -13,4 +13,5 @@ export interface ISecondaryItem {
   id: string;
   editable: boolean;
   editableHandler: (id: string, name: string) => void;
+  deleteHandler: (id: string) => void;
 }

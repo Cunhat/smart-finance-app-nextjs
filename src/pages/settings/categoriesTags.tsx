@@ -35,6 +35,7 @@ function CategoriesTags() {
   const updateSubCategoryMutation = trpc.useMutation(['updateSubCategory']);
 
   const deleteCategory = trpc.useMutation(['deleteCategory']);
+  const deleteSubCategory = trpc.useMutation(['deleteSubCategory']);
 
   const utils = trpc.useContext();
 
@@ -68,6 +69,7 @@ function CategoriesTags() {
             id: subItem.id,
             editable: true,
             editableHandler: editableHandler,
+            deleteHandler: deleteSubCategoryHandler,
           };
           arrayOfSecondaryItems.push(secondaryStruct);
         });
@@ -98,6 +100,12 @@ function CategoriesTags() {
     }
   }, [deleteCategory.isSuccess]);
 
+  useEffect(() => {
+    if (deleteSubCategory.isSuccess) {
+      utils.refetchQueries(['getCategories']);
+    }
+  }, [deleteSubCategory.isSuccess]);
+
   const updateCategoryHandler = (id: string, name: string) => {
     updateCategoryMutation.mutate({ id: id, name: name });
   };
@@ -108,6 +116,10 @@ function CategoriesTags() {
 
   const deleteHandler = (id: string) => {
     deleteCategory.mutate({ id: id });
+  };
+
+  const deleteSubCategoryHandler = (id: string) => {
+    deleteSubCategory.mutate({ id: id });
   };
 
   const handlePrimaryCreation = (id: string, name: string) => {
