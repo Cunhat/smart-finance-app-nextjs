@@ -85,7 +85,7 @@ export function TableItem(props: TableItemProps) {
   };
 
   const getSelectedSubCategory = () => {
-    return categories.find((c) => c.id === state.category.id_category)!.subCategories.find((c) => c.id === state.category.id);
+    return categories.find((c) => c.id === state?.category?.id_category)?.subCategories.find((c) => c.id === state.category.id);
   };
 
   const checkIfCanMutate = () => {
@@ -106,8 +106,8 @@ export function TableItem(props: TableItemProps) {
           <>
             <StyledTableCell>{moment(props.data.date).format('DD/MM/YYYY')}</StyledTableCell>
             <StyledTableCell>{props.data.description}</StyledTableCell>
-            <StyledTableCell>{props.data.subcategory.name}</StyledTableCell>
-            <StyledTableCell>{props.data.tag.name}</StyledTableCell>
+            <StyledTableCell>{props?.data?.subcategory?.name ?? "Sub category not assigned"}</StyledTableCell>
+            <StyledTableCell>{(props?.data?.tag?.name) ?? "Tag not assigned"}</StyledTableCell>
             <StyledTableCell>{parseInt(props.data.value).toFixed(2) + '€'}</StyledTableCell>
             <StyledTableCell>
               <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />

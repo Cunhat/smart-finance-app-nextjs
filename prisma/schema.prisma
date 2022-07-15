@@ -44,13 +44,13 @@ model Transaction {
   date DateTime
   value Decimal
   id_subCategory String
-  subCategory   SubCategory @relation(fields: [id_subCategory], references: [id])
+  subCategory   SubCategory @relation(fields: [id_subCategory], references: [id], onDelete: SetNull)
   id_account String
-  account   Account @relation(fields: [id_account], references: [id])
+  account   Account @relation(fields: [id_account], references: [id], onDelete: SetNull)
   id_user String
-  user  User @relation(fields: [id_user], references: [id])
+  user  User @relation(fields: [id_user], references: [id], onDelete: SetNull)
   id_tag String
-  tag  Tag @relation(fields: [id_tag], references: [id])
+  tag  Tag @relation(fields: [id_tag], references: [id], onDelete: SetNull)
   @@map("transation")
 }
 
