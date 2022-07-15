@@ -36,6 +36,11 @@ function CategoriesTags() {
 
   const deleteCategory = trpc.useMutation(['deleteCategory']);
   const deleteSubCategory = trpc.useMutation(['deleteSubCategory']);
+  const deleteTag = trpc.useMutation(['deleteTag'], {
+    onSuccess: () => {
+      utils.refetchQueries(['getTags']);
+    },
+  });
 
   const utils = trpc.useContext();
 
@@ -122,6 +127,10 @@ function CategoriesTags() {
     deleteSubCategory.mutate({ id: id });
   };
 
+  const deleteTagHandler = (id: string) => {
+    deleteTag.mutate({ id: id });
+  };
+
   const handlePrimaryCreation = (id: string, name: string) => {
     setCategoryName(name);
     setCategoryId(id);
@@ -143,7 +152,7 @@ function CategoriesTags() {
             <div>Loading...</div>
           ) : (
             tags.data?.map((tag) => {
-              return <Tag key={tag.id} tagName={tag.name} />;
+              return <Tag key={tag.id} tagId={tag.id} tagName={tag.name} canBeDeleted deleteHandler={deleteTagHandler} />;
             })
           )}
         </div>

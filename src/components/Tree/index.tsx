@@ -134,7 +134,7 @@ function MainItem(props: MainItemProps): JSX.Element {
           />
         )}
       </MainItemContainer>
-      {open && checkIfHasSubItems() && props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem {...subItem} />)}
+      {open && checkIfHasSubItems() && props.data.secondaryItems.map((subItem, index: number) => <EditableSecondaryItem {...subItem} key={subItem.id}/>)}
     </>
   );
 }

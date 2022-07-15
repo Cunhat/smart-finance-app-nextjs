@@ -218,6 +218,18 @@ export const appRouter = trpc
         },
       });
     },
+  })
+  .mutation('deleteTag', {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input }) {
+      return await prisma.tag.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    },
   });
 
 // export type definition of API
