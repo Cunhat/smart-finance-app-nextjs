@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
-export const TagContainer = styled.div`
+type TagsProps = {
+  confirmDelete: boolean;
+};
+
+export const TagContainer = styled.div<TagsProps>`
   padding: 10px 15px;
-  background-color: #ebeff2;
+  background-color: ${(props) => (props.confirmDelete ? 'red' : '#ebeff2')};
   border-radius: 20px;
   width: fit-content;
   display: flex;
@@ -20,5 +24,4 @@ export const DeleteIconContainer = styled.div`
   right: 10px;
   top: 10px;
   background-color: #ebeff2;
-
 `;
