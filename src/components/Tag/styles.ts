@@ -19,9 +19,9 @@ export const TagContainer = styled.div<TagsProps>`
   }
 `;
 
-export const DeleteIconContainer = styled.div`
+export const DeleteIconContainer = styled.div<TagsProps>`
   position: absolute;
   right: 10px;
   top: 10px;
-  background-color: #ebeff2;
+  background-color: ${(props) => (props.confirmDelete ? 'red' : '#ebeff2')};
 `;

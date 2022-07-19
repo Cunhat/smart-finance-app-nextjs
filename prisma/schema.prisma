@@ -17,6 +17,7 @@ model Account {
   transactions Transaction[]
   id_user String
   user  User @relation(fields: [id_user], references: [id])
+  @@unique([name])
   @@map("account")
 }
 
@@ -26,6 +27,7 @@ model Category {
   subCategories SubCategory[]
   id_user String
   user  User @relation(fields: [id_user], references: [id])
+  @@unique([name])
   @@map("category")
 }
 
@@ -34,7 +36,8 @@ model SubCategory {
   name String
   id_category String
   category   Category @relation(fields: [id_category], references: [id], onDelete: Cascade)
-  transactions Transaction[] 
+  transactions Transaction[]
+  @@unique([name])
   @@map("subcategory")
 }
 
@@ -62,6 +65,7 @@ model User {
   categories Category[]
   accounts Account[]
   transactions Transaction[]
+  @@unique([email])
   @@map("user")
 }
 
@@ -69,5 +73,6 @@ model Tag {
   id String @id @default(uuid())
   name String
   transactions Transaction[]
+  @@unique([name])
   @@map("tag")
 }
