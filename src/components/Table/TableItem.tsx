@@ -20,7 +20,6 @@ type TableItemProps = {
 };
 
 export function TableItem(props: TableItemProps) {
-  console.log(props);
   const [edit, setEdit] = useState(false);
   const { categories, tags, accounts } = useSelector((state: RootState) => state.generalInfo);
   const [state, handleChange] = useTransaction({
@@ -34,6 +33,8 @@ export function TableItem(props: TableItemProps) {
   const updateTransactionMutation = trpc.useMutation(['updateTransaction']);
   const deleteTransactionMutation = trpc.useMutation(['deleteTransaction']);
   const utils = trpc.useContext();
+  const desc = React.useRef(null);
+
 
   const StyledTableRow = withStyles((theme) => ({
     root: {
@@ -70,7 +71,7 @@ export function TableItem(props: TableItemProps) {
   const updateTransaction = () => {
     let transaction: any = {};
     transaction.id = props.data.id;
-    transaction.description = state.description;
+    transaction.description = desc.current.value;
     transaction.value = parseInt(state.value!);
     transaction.date = new Date(state.date);
     transaction.id_account = 'd7222618-c011-42c7-9343-7abef26f33df';
@@ -98,7 +99,8 @@ export function TableItem(props: TableItemProps) {
       state.value !== null &&
       state.date !== undefined &&
       state.category !== undefined &&
-      state.tagName !== undefined
+      state.tagName !== undefined &&
+      state.account !== undefined 
     );
   };
 
@@ -138,10 +140,12 @@ export function TableItem(props: TableItemProps) {
             </StyledTableCell>
             <StyledTableCell>
               <BasicTextInput
-                value={state.description}
+                //value={state.description}
                 height='40px'
                 error={state.description.length === 0}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('setDescription', e)}
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange('setDescription', e)}
+                ref={desc}
+                defaultValue={state.description}
               />
             </StyledTableCell>
             <StyledTableCell>
