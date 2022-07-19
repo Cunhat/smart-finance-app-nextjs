@@ -8,6 +8,7 @@ let initialState = {
   description: '' as string,
   tagName: null as null | {},
   category: null as null | {},
+  account: null as null | {},
 };
 
 type ACTIONTYPE =
@@ -16,6 +17,7 @@ type ACTIONTYPE =
   | { type: 'setValue'; payload: string }
   | { type: 'setTagName'; payload: string }
   | { type: 'setCategory'; payload: string }
+  | { type: 'setAccount'; payload: string }
   | { type: 'clear' };
 
 function reducer(state: typeof initialState, action: ACTIONTYPE): typeof initialState {
@@ -30,6 +32,8 @@ function reducer(state: typeof initialState, action: ACTIONTYPE): typeof initial
       return { ...state, tagName: action.payload };
     case 'setCategory':
       return { ...state, category: action.payload };
+    case 'setAccount':
+      return { ...state, account: action.payload };
     case 'clear':
       return initialState;
     default:

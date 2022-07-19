@@ -1,5 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
-import { Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client';
+import { inferQueryResponse } from '@/pages/api/trpc/[trpc]';
 
 
 export interface ISideBarItem {
@@ -23,10 +24,6 @@ export interface ISubCategory {
   category: ICategory;
 }
 
-export interface IAccount {
-  name: string;
-  id: string;
-}
 export interface IUser {
   name: string;
   id: string;
@@ -53,3 +50,5 @@ export interface IGetAllCategoriesRequest {
 export interface IGetAllTagsRequest {
   getTags: Array<ITag>;
 }
+
+export type IAccount = inferQueryResponse<'getAccounts'>[number];

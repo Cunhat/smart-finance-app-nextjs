@@ -25,7 +25,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
   const createTransaction = trpc.useMutation(['createTransaction']);
   const utils = trpc.useContext();
   let [state, handleChange, clearState] = useTransaction(undefined);
-  const { categories, tags } = useSelector((state: RootState) => state.generalInfo);
+  const { categories, tags, accounts } = useSelector((state: RootState) => state.generalInfo);
 
   React.useEffect(() => {
     if (createTransaction.isSuccess) {
@@ -48,6 +48,7 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
     transaction.id_user = 'user';
     transaction.id_subCategory = state.category.id;
     transaction.id_tag = state.tagName.id;
+    transaction.id_account = state.account.id;
 
     createTransaction.mutate(transaction);
     cancelAndCloseModal();
@@ -59,7 +60,8 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
       state.value !== undefined &&
       state.date !== undefined &&
       state.category !== undefined &&
-      state.tagName !== undefined
+      state.tagName !== undefined &&
+      state.account !== undefined
     );
   };
 
@@ -69,6 +71,17 @@ export const CreateTransaction: React.FC<CreateTransactionProps> = (props) => {
       <div
         style={{ width: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '15px' }}
       >
+        <Item>
+          <Text text='Account' fontSize='16px' />
+          <SelectInput
+            data={accounts}
+            defaultValue={state.account}
+            onValueChange={(e) => handleChange('setAccount', e)}
+            height='40px'
+            placeholder='Select a account'
+            optionLabel='name'
+          />
+        </Item>
         <Item>
           <Text text='Date' fontSize='16px' />
           <CalendarInput

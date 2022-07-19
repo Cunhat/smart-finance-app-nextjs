@@ -20,14 +20,16 @@ type TableItemProps = {
 };
 
 export function TableItem(props: TableItemProps) {
+  console.log(props);
   const [edit, setEdit] = useState(false);
-  const { categories, tags } = useSelector((state: RootState) => state.generalInfo);
+  const { categories, tags, accounts } = useSelector((state: RootState) => state.generalInfo);
   const [state, handleChange] = useTransaction({
     value: props.data.value.toString(),
     date: props.data.date,
     description: props.data.description,
     tagName: props.data.tag,
     category: props.data.subcategory,
+    account: props.data.account,
   });
   const updateTransactionMutation = trpc.useMutation(['updateTransaction']);
   const deleteTransactionMutation = trpc.useMutation(['deleteTransaction']);
@@ -75,6 +77,7 @@ export function TableItem(props: TableItemProps) {
     transaction.id_user = 'user';
     transaction.id_subCategory = state.category!.id;
     transaction.id_tag = state.tagName!.id;
+    transaction.id_account = state.account!.id;
     updateTransactionMutation.mutate(transaction);
     handleEdit();
   };
@@ -104,10 +107,11 @@ export function TableItem(props: TableItemProps) {
       <StyledTableRow>
         {!edit ? (
           <>
+            <StyledTableCell>{props.data.account.name}</StyledTableCell>
             <StyledTableCell>{moment(props.data.date).format('DD/MM/YYYY')}</StyledTableCell>
             <StyledTableCell>{props.data.description}</StyledTableCell>
-            <StyledTableCell>{props?.data?.subcategory?.name ?? "Sub category not assigned"}</StyledTableCell>
-            <StyledTableCell>{(props?.data?.tag?.name) ?? "Tag not assigned"}</StyledTableCell>
+            <StyledTableCell>{props?.data?.subcategory?.name ?? 'Sub category not assigned'}</StyledTableCell>
+            <StyledTableCell>{props?.data?.tag?.name ?? 'Tag not assigned'}</StyledTableCell>
             <StyledTableCell>{parseInt(props.data.value).toFixed(2) + '€'}</StyledTableCell>
             <StyledTableCell>
               <FontAwesomeIcon icon={faPen} style={{ width: '15px', height: '15px' }} onClick={handleEdit} />
@@ -115,6 +119,16 @@ export function TableItem(props: TableItemProps) {
           </>
         ) : (
           <>
+            <StyledTableCell>
+              <SelectInput
+                data={accounts}
+                defaultValue={state.account}
+                onValueChange={(e) => handleChange('setAccount', e)}
+                placeholder='Select a account'
+                height='40px'
+                optionLabel='name'
+              />
+            </StyledTableCell>
             <StyledTableCell>
               <CalendarInput
                 dateFormat={'dd/mm/yy'}

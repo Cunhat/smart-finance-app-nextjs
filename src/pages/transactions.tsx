@@ -12,11 +12,14 @@ import { TableFiltersContainer } from '@/styles/Settings';
 import { PageTitle } from '@/components/Typography';
 import { BasicTextInput } from '@/components/Inputs/BasicTextInput';
 import { SelectInput } from '@/components/Inputs/Select';
-import { loadCategories, saveTags } from '@/redux/slices/categoriesSlice';
+import { loadCategories, saveAccounts, saveTags } from '@/redux/slices/categoriesSlice';
 import { useDispatch } from 'react-redux';
 import { CreateTransaction } from '@/components/CreateTransaction';
 
 const header: ITableHeader = [
+  {
+    title: 'Account',
+  },
   {
     title: 'Date',
   },
@@ -61,6 +64,12 @@ const Transactions: NextPage = () => {
     refetchOnWindowFocus: false,
   });
 
+  const accounts = trpc.useQuery(['getAccounts'], {
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
   useEffect(() => {
     if (data !== undefined && !isLoading) {
       formatData(data);
@@ -78,6 +87,12 @@ const Transactions: NextPage = () => {
       dispatch(saveTags(tags.data));
     }
   }, [tags.data, tags.isSuccess]);
+
+  useEffect(() => {
+    if (tags.data !== undefined && tags.isSuccess) {
+      dispatch(saveAccounts(accounts.data));
+    }
+  }, [accounts.data, accounts.isSuccess]);
 
   function sortObject(finalObject: Array<ITableRowItem>, yearObject: Array<ITableRowItem>) {
     finalObject.sort((a, b) => {

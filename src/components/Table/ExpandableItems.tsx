@@ -12,7 +12,7 @@ type ExpandableItemsProps = {
 export function ExpandableItems(props: ExpandableItemsProps) {
   return (
     <>
-      <TableCell colSpan={6} style={{ padding: '0px' }}>
+      <TableCell colSpan={7} style={{ padding: '0px' }}>
         <TableExpandableItem>
           <p>{props.title}</p>
           {props.open ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronUp} />}
